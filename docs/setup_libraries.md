@@ -12,6 +12,9 @@
 - pip install django-crispy-forms 
 - pip install django-countries    
 - npm install @craco/craco
+- npm install react-bootsrap bootstrap
+- npm install react-router-dom
+- npm inst
 
 3. To activate App use:
 - While in front folder use 'npm run build' to make build of the front end components
