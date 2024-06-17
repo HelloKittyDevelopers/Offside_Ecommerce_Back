@@ -14,4 +14,5 @@
 - npm install @craco/craco
 
 3. To activate App use:
-- 'python manage.py runserver' while standing in src folder
+- While in front folder use 'npm run build' to make build of the front end components
+- Then run 'python manage.py runserver' while standing in src folder to start the app
