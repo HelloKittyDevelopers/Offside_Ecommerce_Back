@@ -31,7 +31,6 @@ class Product(models.Model):
     product_name = models.CharField(max_length=4000, null=False)
     price = models.IntegerField(null=False)
     description = models.TextField(blank=True)
-    stock = models.IntegerField(null=False)
     type_id_category = models.ForeignKey('Type', on_delete=models.SET_NULL, null=True)
 
 class ProductCategory(models.Model):
