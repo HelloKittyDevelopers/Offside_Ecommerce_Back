@@ -71,7 +71,7 @@ class Size(models.Model):
 
 class Stock(models.Model):
     id_stock = models.AutoField(primary_key=True)
-    quantity = models.IntegerField(max_length=1000, null=False)
+    quantity = models.IntegerField(null=False)
     product_size_id = models.ForeignKey(ProductSize, on_delete=models.CASCADE)
     
     class Meta:
