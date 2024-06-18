@@ -21,3 +21,12 @@
 3. To activate App use:
 - While in front folder use 'npm run build' to make build of the front end components
 - Then run 'python manage.py runserver' while standing in src folder to start the app
+
+4. Local Database Guide.
+- Enter pgAdmin4 and create a database called 'store'
+- Connect postgres with project through setting with user, pass, and port
+- Confirm that you don't have any files in migrations apart from '__init_' files
+- Then use command 'python manage.py showmigrations' and check that you dont have anything checked
+- Finally use 'python manage.py makemigrations'
+- End it with 'python manage.py migrate'
+- Succesfully created database in postgres connected with project check postgres tables :D

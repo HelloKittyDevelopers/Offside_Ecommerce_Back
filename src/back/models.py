@@ -48,7 +48,7 @@ class ProductCategory(models.Model):
 
 class ProductOrder(models.Model):
     product_order_id = models.ForeignKey(Product, on_delete=models.CASCADE)
-    order_product_id = models.ForeignKey(OrderUser, on_delete=models.CASCADE)
+    order_product_id = models.ForeignKey('OrderUser', on_delete=models.CASCADE)
 
     class Meta:
         constraints = [
@@ -57,7 +57,7 @@ class ProductOrder(models.Model):
 
 class ProductSize(models.Model):
     product_size_id = models.ForeignKey(Product, on_delete=models.CASCADE)
-    size_product_id = models.ForeignKey(SizeProduct, on_delete=models.CASCADE)
+    size_product_id = models.ForeignKey('SizeProduct', on_delete=models.CASCADE)
 
     class Meta:
         constraints = [
@@ -95,6 +95,6 @@ class OrderUser(models.Model):
     date_order = models.DateField(null=False)
     total_payment = models.FloatField(null=False)
     address = models.CharField(max_length=80, null=False)
-    user_user_id = models.ForeignKey(UserInfo, on_delete=models.SET_NULL, null=False)
-    order_state_id = models.ForeignKey(OrderState, on_delete=models.SET_NULL, null=False)
+    user_user_id = models.ForeignKey(UserInfo, on_delete=models.SET_NULL, null=True)
+    order_state_id = models.ForeignKey(OrderState, on_delete=models.SET_NULL, null=True)
     taxes = models.FloatField(null=False)
