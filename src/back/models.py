@@ -70,7 +70,7 @@ class Rol(models.Model):
 
 class SizeProduct(models.Model):
     id_size = models.AutoField(primary_key=True)
-    size_prod = models.CharField(max_length=80. null=False)
+    size_prod = models.CharField(max_length=80, null=False)
 
 class Stock(models.Model):
     id_stock = models.AutoField(primary_key=True)
