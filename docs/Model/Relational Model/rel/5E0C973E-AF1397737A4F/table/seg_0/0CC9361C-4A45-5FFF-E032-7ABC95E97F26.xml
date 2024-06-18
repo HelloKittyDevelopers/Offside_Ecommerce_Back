@@ -1,0 +1,146 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="0CC9361C-4A45-5FFF-E032-7ABC95E97F26" name="ORDER">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 04:03:07 UTC</createdTime>
+<generatorID>005BA9BE-1750-2503-E8C8-42859AE205B0</generatorID>
+<ownerDesignName>Relational Model</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="Id_order" id="D7D5A86F-C5E9-7E62-54E2-A100B9396144">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 04:03:07 UTC</createdTime>
+<generatorID>95670A0C-50EC-392D-36E4-AD4F54A5952D</generatorID>
+<ownerDesignName>Relational Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="date_order" id="28A3A3DD-7FCD-1C54-51BE-FC2A10B09E20">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 04:03:07 UTC</createdTime>
+<generatorID>D9DB1FFF-5F9C-E007-1826-7EC664284EF9</generatorID>
+<ownerDesignName>Relational Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT007</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="total_payment" id="7CAA309E-C134-9B7A-7098-A31829C75F96">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 04:03:07 UTC</createdTime>
+<generatorID>2E171710-8442-DA4B-0BE8-116308E05D3D</generatorID>
+<ownerDesignName>Relational Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT020</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="address" id="AB7E2587-4180-7CA2-77A4-BB224193738F">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 04:03:07 UTC</createdTime>
+<generatorID>72F827E2-6DDC-794C-46D0-D778D7A424E7</generatorID>
+<ownerDesignName>Relational Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>80 CHAR</dataTypeSize>
+<ownDataTypeParameters>80 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="USER_Id_user" id="AC60FA92-29DE-6276-A8E9-924F5A0E3BDB">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 04:03:07 UTC</createdTime>
+<generatorID>F22E726F-A92A-0DF1-D4E5-64BD5D674065</generatorID>
+<ownerDesignName>Relational Model</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="F57B83D8-E9B0-8B04-C480-19448487F089" referredColumn="D895D521-6472-880C-FA0A-6564BA97E8AA"/>
+</associations>
+</Column>
+<Column name="ORDER_STATE_Id_order_state" id="0234FE15-CEE1-A7FD-A0C7-3DC387CEF283">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 04:03:07 UTC</createdTime>
+<generatorID>B8FD6B10-18F3-1BD3-A0BD-C2CAC7B5ABC6</generatorID>
+<ownerDesignName>Relational Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="A9040E77-D2E5-508E-EC2B-76E32A809368" referredColumn="0C3CDAE4-193D-CF7F-8846-040D011D7EBC"/>
+</associations>
+</Column>
+<Column name="taxes" id="8EB9D37B-FD30-A76C-8734-89988BCE2032">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 04:03:07 UTC</createdTime>
+<generatorID>41B87E83-6818-C602-3F9A-13AE5F67977C</generatorID>
+<ownerDesignName>Relational Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT020</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="3AEA3A68-085C-FC95-A05F-8FFC25090954" name="ORDER_PK">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 04:03:07 UTC</createdTime>
+<generatorID>BFEAAF11-0C9A-772F-BA5F-0FA11790C263</generatorID>
+<ownerDesignName>Relational Model</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="D7D5A86F-C5E9-7E62-54E2-A100B9396144"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="0D6F229E-8147-9280-7CF1-CE82C34FDD9A" name="ORDER__IDX">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 04:03:08 UTC</createdTime>
+<ownerDesignName>Relational Model</ownerDesignName>
+<indexState>Unique Plain Index</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<relationGeneratorID>29BB416C-B9CF-7756-11BA-5BAB8E424F7D</relationGeneratorID>
+<indexColumnUsage>
+<colUsage columnID="0234FE15-CEE1-A7FD-A0C7-3DC387CEF283"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="12B2D06D-0DE4-E384-5EE2-686F6337EBDA" name="ORDER_ORDER_STATE_FK">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 04:03:07 UTC</createdTime>
+<generatorID>29BB416C-B9CF-7756-11BA-5BAB8E424F7D</generatorID>
+<ownerDesignName>Relational Model</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="0234FE15-CEE1-A7FD-A0C7-3DC387CEF283"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="9DE0CCF8-F73F-DAF5-D592-5967E5C74780" name="ORDER_USER_FK">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 04:03:08 UTC</createdTime>
+<generatorID>1D4A1C76-605A-8397-1189-E28598B6346B</generatorID>
+<ownerDesignName>Relational Model</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="AC60FA92-29DE-6276-A8E9-924F5A0E3BDB"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

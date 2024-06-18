@@ -1,0 +1,21 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Relation class="oracle.dbtools.crest.model.design.logical.Relation" name="Usuario_Rol" directorySegmentName="seg_0" id="9766CBB6-F177-57CA-EA0F-D68D5757D327">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 02:41:19 UTC</createdTime>
+<ownerDesignName>Relational Model</ownerDesignName>
+<engineerTo>
+<item key="5E0C973E-9EBC-ADF0-6EFC-AF1397737A4F" value="true"/>
+</engineerTo>
+<sourcePk>98E86DF4-DA58-A407-7C7D-C5479AA124DA</sourcePk>
+<identifying>false</identifying>
+<nameOnSource>tiene muchos</nameOnSource>
+<nameOnTarget>tiene muchos</nameOnTarget>
+<optionalSource>false</optionalSource>
+<optionalTarget>false</optionalTarget>
+<sourceCardinality>*</sourceCardinality>
+<sourceEntity>1D7C2D43-D1AD-4982-8240-6E13552AA8B0</sourceEntity>
+<targetCardinalityString>*</targetCardinalityString>
+<targetEntity>AECCFE25-EB1E-7EEC-F99E-9E4D56C1A446</targetEntity>
+<transferable>true</transferable>
+<deleteRule>NO ACTION</deleteRule>
+</Relation>

@@ -1,0 +1,58 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="AECCFE25-EB1E-7EEC-F99E-9E4D56C1A446" name="ROL">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 02:33:07 UTC</createdTime>
+<ownerDesignName>Identity Relational Model</ownerDesignName>
+<engineerTo>
+<item key="5E0C973E-9EBC-ADF0-6EFC-AF1397737A4F" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="Id_rol" id="3C2A8DCC-6D1F-D4D9-8825-48CBEB9189C5">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 02:33:12 UTC</createdTime>
+<ownerDesignName>Identity Relational Model</ownerDesignName>
+<engineerTo>
+<item key="5E0C973E-9EBC-ADF0-6EFC-AF1397737A4F" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="rol" id="6279606B-BFB7-DE31-3BCC-27EE9AADD8FB">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 02:33:39 UTC</createdTime>
+<ownerDesignName>Identity Relational Model</ownerDesignName>
+<engineerTo>
+<item key="5E0C973E-9EBC-ADF0-6EFC-AF1397737A4F" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>80 CHAR</dataTypeSize>
+<ownDataTypeParameters>80 CHAR,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="A89616B0-95FC-A540-8EA3-078BDABF68D9" name="ROL PK">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 02:34:32 UTC</createdTime>
+<ownerDesignName>Identity Relational Model</ownerDesignName>
+<engineerTo>
+<item key="5E0C973E-9EBC-ADF0-6EFC-AF1397737A4F" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>3C2A8DCC-6D1F-D4D9-8825-48CBEB9189C5</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>
