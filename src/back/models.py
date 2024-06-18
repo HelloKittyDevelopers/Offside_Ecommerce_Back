@@ -34,8 +34,8 @@ class Product(models.Model):
     type_id_category = models.ForeignKey('Type', on_delete=models.SET_NULL, null=True)
 
 class ProductCategory(models.Model):
-    category_product_id = models.ForeignKey(Category, on_delete=models.CASCADE)
-    product_category_id = models.ForeignKey(Product, on_delete=models.CASCADE)
+    category_product = models.ForeignKey(Category, on_delete=models.CASCADE)
+    product_category = models.ForeignKey(Product, on_delete=models.CASCADE)
 
     class Meta:
         constraints = [
