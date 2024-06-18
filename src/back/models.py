@@ -12,7 +12,7 @@ class Category(models.Model):
 class Image(models.Model):
     id_image = models.AutoField(primary_key=True)
     image = models.BinaryField(null=False)
-    productID_image = models.ForeignKey('Product', on_delete=models.CASCADE, null=False)
+    product_image = models.ForeignKey('Product', on_delete=models.CASCADE, null=False)
 
 class OrderState(models.Model):
     id_order_state = models.AutoField(primary_key=True)
@@ -31,7 +31,7 @@ class Product(models.Model):
     product_name = models.CharField(max_length=4000, null=False)
     price = models.IntegerField(null=False)
     description = models.TextField(blank=True)
-    type_id_category = models.ForeignKey('Type', on_delete=models.SET_NULL, null=True)
+    type_category = models.ForeignKey('Type', on_delete=models.SET_NULL, null=True)
 
 class ProductCategory(models.Model):
     category_product = models.ForeignKey(Category, on_delete=models.CASCADE)
