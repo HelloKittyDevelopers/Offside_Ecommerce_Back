@@ -1,12 +1,16 @@
 # backend/urls.py
 
-from django.urls import path
-from api.views import views
+from django.contrib import admin
+from django.urls import path, include
+from api.views.views import *
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
 
 urlpatterns = [
-    path('users/', views.UserInfoListCreate.as_view(), name='user-list-create'),
-    path('users/<int:pk>/', views.UserInfoDetail.as_view(), name='user-detail'),
-
-    path('roles/', views.RolListCreate.as_view(), name='rol-list-create'),
-    path('roles/<int:pk>/', views.RolDetail.as_view(), name='rol-detail'),
+    path("api/user/register/", CreateUserView.as_view(), name="register"),
+    path("api/user/register/rol", CreateRol.as_view(), name="rol"),
+    path("api/token/", TokenObtainPairView.as_view(), name="get_token"),
+    path("api/token/refresh", TokenRefreshView.as_view(), name="refresh"),
+    path("api-auth", include("rest_framework.urls")),
 ]
+

@@ -1,4 +1,5 @@
 from rest_framework.serializers import ModelSerializer
+from django.contrib.auth.models import User
 
 from api.models import *
 
@@ -22,7 +23,11 @@ class OrderStateSerializer(ModelSerializer):
 class UserInfoSerializer(ModelSerializer):
     class Meta:
         model = UserInfo
-        fields = ['id_user', 'username', 'encrypted_password', 'user_name', 'email', 'phone_number', 'user_rol']
+        fields = ['id_user', 'name', 'encrypted_password', 'user_name', 'email', 'phone_number', 'user_rol']
+
+    def create(self, validated_data):
+        user = UserInfo.objects.create(**validated_data)
+        return user
 
 class ProductSerializer(ModelSerializer):
     class Meta:
