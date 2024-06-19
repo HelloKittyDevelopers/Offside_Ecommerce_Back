@@ -3,6 +3,7 @@
 1. Create virtual enviornment:
 - In main folder ENOCRAECOMERCE use the command 'python -m venv .venv'
 - Verify the name is in gitignore just in case to avoid unnecesary temporary files
+- Allow access  'Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser' 
 - To activate use: '.\.venv\Scripts\Activate.ps1'
 
 2. After activating virtual env install following libraries:
@@ -20,6 +21,7 @@
 
 3. To activate App use:
 - While in front folder use 'npm run build' to make build of the front end components
+- Before activate the server and visualize the Django Administrator, create the Super user 'python manage.py createsuperuser'
 - Then run 'python manage.py runserver' while standing in src folder to start the app
 
 4. Local Database Guide.
@@ -30,3 +32,4 @@
 - Finally use 'python manage.py makemigrations'
 - End it with 'python manage.py migrate'
 - Succesfully created database in postgres connected with project check postgres tables :D
+
