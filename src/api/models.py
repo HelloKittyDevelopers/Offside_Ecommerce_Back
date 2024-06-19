@@ -28,6 +28,7 @@ class UserInfo(models.Model):
     user_name = models.CharField(max_length=80, null=False)
     email = models.CharField(max_length=80, null=False)
     phone_number = models.CharField(max_length=80)
+    user_rol = models.ForeignKey('Rol', on_delete=models.SET_NULL, null=True)
 
 class Product(models.Model):
     id_product = models.AutoField(primary_key=True)
@@ -85,14 +86,6 @@ class Type(models.Model):
     id_type = models.AutoField(primary_key=True)
     type = models.CharField(max_length=80, null=False)
 
-class UserRol(models.Model):
-    user = models.ForeignKey(UserInfo, on_delete=models.CASCADE)
-    rol = models.ForeignKey(Rol, on_delete=models.CASCADE)
-
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(fields=['user_id', 'rol_id'], name='usuario_rol_pk')
-        ]
 
 class OrderUser(models.Model):
     id_order = models.AutoField(primary_key=True)

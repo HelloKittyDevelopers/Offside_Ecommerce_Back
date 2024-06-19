@@ -22,7 +22,7 @@ class OrderStateSerializer(ModelSerializer):
 class UserInfoSerializer(ModelSerializer):
     class Meta:
         model = UserInfo
-        fields = ['id_user', 'username', 'encrypted_password', 'user_name', 'email', 'phone_number']
+        fields = ['id_user', 'username', 'encrypted_password', 'user_name', 'email', 'phone_number', 'user_rol']
 
 class ProductSerializer(ModelSerializer):
     class Meta:
@@ -63,11 +63,6 @@ class TypeSerializer(ModelSerializer):
     class Meta:
         model = Type
         fields = ['id_type', 'type']
-
-class UserRolSerializer(ModelSerializer):
-    class Meta:
-        model = UserRol
-        fields = ['user', 'rol']
 
 class OrderUserSerializer(ModelSerializer):
     class Meta:

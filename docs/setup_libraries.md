@@ -9,18 +9,18 @@
 
 2. After activating virtual env install following libraries:
 
-- pip install psycopg2
-- pip install django
-- pip install django-allauth
-- pip install django-crispy-forms
-- pip install django-countries
+pip install psycopg2
+pip install django
+pip install django-allauth
+pip install django-crispy-forms
+pip install django-countries
 
 // correr esto estando en el folder front
 
-- npm install @craco/craco
-- npm install react-router-dom
-- npm install bootstrap bootstrap
-- npm install react-bootstrap bootstrap
+npm install @craco/craco
+npm install react-router-dom
+npm install bootstrap bootstrap
+npm install react-bootstrap bootstrap
 
 3. To activate App use:
 
