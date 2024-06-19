@@ -23,7 +23,7 @@ class OrderState(models.Model):
 
 class UserInfo(models.Model):   
     id_user = models.AutoField(primary_key=True)
-    username = models.CharField(max_length=80, null=False)
+    name = models.CharField(max_length=80, null=False)
     encrypted_password = models.CharField(max_length=80, null=False)
     user_name = models.CharField(max_length=80, null=False)
     email = models.CharField(max_length=80, null=False)
