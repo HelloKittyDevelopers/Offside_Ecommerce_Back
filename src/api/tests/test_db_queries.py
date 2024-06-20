@@ -28,6 +28,7 @@ class ProductTestCase(TestCase):
         self.assertIn(self.product2, products)
 
     def test_get_product_by_id(self):
+        super().setUp()
         result = get_product_by_id(self.product1.id_product)
         self.assertEqual(result, self.product1)
 
@@ -35,6 +36,7 @@ class ProductTestCase(TestCase):
         self.assertIsNone(result)
 
     def test_get_products_by_category(self):
+        super().setUp()
         products = get_products_by_category('Ropa')
         self.assertEqual(len(products), 2)
         self.assertIn(self.product1, products)
