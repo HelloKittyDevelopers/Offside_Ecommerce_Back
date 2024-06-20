@@ -5,6 +5,7 @@ from api.models import *
 from api.serializer import *
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import viewsets
+from . import db_queries
 
 # Create views
 class CreateUserView(generics.CreateAPIView):
