@@ -168,5 +168,21 @@ def get_all_order_products(user_id):
 
 # Product Reviews
 
+def get_product_reviews(product_id):
+    query ="""
+        SELECT * FROM api_review WHERE product_id = %s
+    """
+    reviews = Review.objects.raw(query, [product_id])
+
+    return reviews
+
+def get_product_review_average(product_id):
+    query ="""
+        SELECT AVG(rating) AS average_rating FROM api_review WHERE product_id = %s
+    """
+    average_rating = Review.objects.raw(query, [product_id])[0].average_rating
+
+    return average_rating
 
 
+    
