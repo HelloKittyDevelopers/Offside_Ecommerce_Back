@@ -14,3 +14,7 @@ django-crispy-forms
 django_countries
 coreapi
 setuptools
+pytest
+pytest-django
+pkg_resources
+setuptools

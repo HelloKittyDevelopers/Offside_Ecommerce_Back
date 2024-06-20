@@ -3,7 +3,7 @@
 from .models import (
     Category, Image, OrderState, UserInfo, Product,
     ProductCategory, ProductOrder, ProductSize, Rol, Size,
-    Stock, Type, UserRol, OrderUser
+    Stock, Type, OrderUser
 )
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import connection
@@ -22,6 +22,14 @@ def get_product_by_id(product_id):
     except Product.DoesNotExist:
         return None
 
+def get_product_images(product_id):
+    product = get_product_by_id(product_id)
+    query ="""
+        SELECT * FROM api_image WHERE product_image = %s
+    """
+    images = Product.objects.raw(query, [product.image])
+
+    return images
 
 def get_products_by_category(category_name):
     # Get the category id for the given category name
@@ -71,7 +79,12 @@ def get_products_by_price(products, min_price, max_price):
         SELECT * FROM api_product
         WHERE id_product IN %s AND price BETWEEN %s AND %s
     """
-    filtered_products = Product.objects.raw(query, [tuple(product_ids), min_price, max_price])
+    if(min_price == null and max_price != null):
+        filtered_products = Product.objects.raw(query, [tuple(product_ids), 0, max_price])
+    elif(min_price != null and max_price == null):
+        filtered_products = Product.objects.raw(query, [tuple(product_ids), min_price, 999999999])
+    else:   
+        filtered_products = Product.objects.raw(query, [tuple(product_ids), min_price, max_price])
     return filtered_products
 
 def get_products_by_size(products, size_name):
@@ -103,10 +116,10 @@ def get_products_by_category_by_filters(category_name, type_name, min_price, max
     if(type_name != null):
         products = get_products_by_type(products, type_name)
     
-    if(min_price & max_price != null)
+    if(min_price != null or max_price != null):
         products = get_products_by_price(products, min_price, max_price)
     
-    if(size_name != null)
+    if(size_name != null):
         products = get_products_by_size(products, size_name)
     
     return products
@@ -119,5 +132,5 @@ def get_all_categories():
 def get_all_types():
     return Type.objects.all()
 
-def 
-
+def get_all_sizes():
+    return Size.objects.all()
