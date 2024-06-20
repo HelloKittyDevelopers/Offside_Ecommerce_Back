@@ -12,3 +12,5 @@ python-dotenv
 django-allauth
 django-crispy-forms
 django_countries
+coreapi
+setuptools

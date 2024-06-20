@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'allauth.socialaccount',
     'crispy_forms',
     'django_countries',
-    'api',  # Asegúrate de que 'api' esté incluido aquí
+    'coreapi',
+    'api',  #Mi aplicación
     'rest_framework',
     'corsheaders',
     # otras aplicaciones instaladas aquí
@@ -179,6 +180,7 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],
+    "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
 }
 
 

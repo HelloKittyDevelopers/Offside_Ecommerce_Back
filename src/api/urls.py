@@ -1,23 +1,25 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from EncoraEcommerce.src.api.views.views import *
+from .views.views import *
+from rest_framework.documentation import include_docs_urls
 
 router = DefaultRouter()
-router.register(r'categories', CategoryViewSet)
-router.register(r'images', ImageViewSet)
-router.register(r'order_states', OrderStateViewSet)
-router.register(r'users', UserInfoViewSet)
-router.register(r'products', ProductViewSet)
-router.register(r'product_categories', ProductCategoryViewSet)
-router.register(r'product_orders', ProductOrderViewSet)
-router.register(r'product_sizes', ProductSizeViewSet)
-router.register(r'roles', RolViewSet)
-router.register(r'sizes', SizeViewSet)
-router.register(r'stocks', StockViewSet)
-router.register(r'types', TypeViewSet)
-router.register(r'user_roles', UserRolViewSet)
-router.register(r'orders', OrderUserViewSet)
+router.register(r'categories', CategoryView, 'categories')
+router.register(r'images', ImageView, 'images')
+router.register(r'order_states', OrderStateView, 'order_states')
+router.register(r'users', UserInfoView, 'users')
+router.register(r'products', ProductView, 'products')
+router.register(r'product_categories', ProductCategoryView, 'product_categories')
+router.register(r'product_orders', ProductOrderView, 'product_orders')
+router.register(r'product_sizes', ProductSizeView, 'product_sizes')
+router.register(r'roles', RolView, 'roles')
+router.register(r'sizes', SizeView, 'sizes')
+router.register(r'stocks', StockView, 'stocks')
+router.register(r'types', TypeView, 'types')
+# router.register(r'user_roles', UserRolView)
+router.register(r'orders', OrderUserView, 'orders')
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path("", include(router.urls)),
+    path('docs/', include_docs_urls(title="Home API"))
 ]
