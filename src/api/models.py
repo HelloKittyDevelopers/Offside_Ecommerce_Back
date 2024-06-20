@@ -63,16 +63,19 @@ class ProductCategory(models.Model):
             models.UniqueConstraint(fields=['category_product_id', 'product_category_id'], name='productcategory_16_pk')
         ]
 
-class ProductOrder(models.Model):
-    product_order = models.ForeignKey(Product, on_delete=models.CASCADE)
-    order_product = models.ForeignKey('OrderUser', on_delete=models.CASCADE)
+#Used to be ProductOrder, now its the same conexion but has quantity and primary key to identify how many of that product the user is buying
+class OrderItem(models.Model):
+    id_order_item = models.AutoField(primary_key=True)
+    order_quantity = models.IntegerField(null=False)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    order_user = models.ForeignKey('OrderUser', on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"{self.product_order} in {self.order_product}"
+        return f"{self.order_quantity} of {self.product} in Order #{self.order_user.id_order}"
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['product_order_id', 'order_product_id'], name='productorder_pk')
+            models.UniqueConstraint(fields=['product', 'order_user'], name='unique_order_item')
         ]
 
 class ProductSize(models.Model):
@@ -123,7 +126,8 @@ class Type(models.Model):
 
 class OrderUser(models.Model):
     id_order = models.AutoField(primary_key=True)
-    date_order = models.DateField(null=False)
+    date_order = models.DateField(auto_now_add=True, null=False)
+    shipping_price = models.FloatField(null=False)
     total_payment = models.FloatField(null=False)
     address = models.CharField(max_length=80, null=False)
     user = models.ForeignKey(UserInfo, on_delete=models.SET_NULL, null=True)
@@ -132,3 +136,23 @@ class OrderUser(models.Model):
 
     def __str__(self):
         return f"Order #{self.id_order} by {self.user}"
+
+
+#Review Connects with product and userinfo, Review can only have 1 product and user while product and user can have many reviews
+class Review(models.Model):
+    id_review = models.AutoField(primary_key=True)
+    rating = models.IntegerField(null=False)
+    comment = models.CharField(max_length=250, null=True)
+    creation_date = models.DateField(auto_now_add=True, null=False)
+
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
+    user = models.ForeignKey(UserInfo, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"Review for {self.product} by {self.user.user_name}"
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['product', 'user'], name='unique_review')
+        ]
+

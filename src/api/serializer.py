@@ -38,10 +38,10 @@ class ProductCategorySerializer(ModelSerializer):
         model = ProductCategory
         fields = ['category_product', 'product_category']
 
-class ProductOrderSerializer(ModelSerializer):
+class OrderItemSerializer(ModelSerializer):
     class Meta:
-        model = ProductOrder
-        fields = ['product_order', 'order_product']
+        model = OrderItem
+        fields = ['id_order_item', 'order_quantity', 'product', 'order_user']
 
 class ProductSizeSerializer(ModelSerializer):
     class Meta:
@@ -72,3 +72,8 @@ class OrderUserSerializer(ModelSerializer):
     class Meta:
         model = OrderUser
         fields = ['id_order', 'date_order', 'total_payment', 'address', 'user', 'order_state', 'taxes']
+
+class ReviewSerializer(ModelSerializer):
+    class Meta:
+        model = Review
+        fields = ['id_review', 'rating', 'comment', 'creation_date', 'product_review', 'review_user']

@@ -10,7 +10,7 @@ router.register(r'order_states', OrderStateView, 'order_states')
 router.register(r'users', UserInfoView, 'users')
 router.register(r'products', ProductView, 'products')
 router.register(r'product_categories', ProductCategoryView, 'product_categories')
-router.register(r'product_orders', ProductOrderView, 'product_orders')
+router.register(r'order_item', OrderItemView, 'order_item')
 router.register(r'product_sizes', ProductSizeView, 'product_sizes')
 router.register(r'roles', RolView, 'roles')
 router.register(r'sizes', SizeView, 'sizes')
@@ -18,6 +18,7 @@ router.register(r'stocks', StockView, 'stocks')
 router.register(r'types', TypeView, 'types')
 # router.register(r'user_roles', UserRolView)
 router.register(r'orders', OrderUserView, 'orders')
+router.register(r'reviews', ReviewView, 'reviews')
 
 urlpatterns = [
     path("", include(router.urls)),

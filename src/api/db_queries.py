@@ -2,8 +2,8 @@
 
 from .models import (
     Category, Image, OrderState, UserInfo, Product,
-    ProductCategory, ProductOrder, ProductSize, Rol, Size,
-    Stock, Type, OrderUser
+    ProductCategory, OrderItem, ProductSize, Rol, Size,
+    Stock, Type, OrderUser, Review
 )
 from django.core.exceptions import ObjectDoesNotExist
 from django.db import connection
@@ -70,7 +70,7 @@ def get_products_by_type(products, type_name):
     return filtered_products
 
 def get_products_by_price(products, min_price, max_price):
-    # Filter products by type id
+    # Filter products by price
     product_ids = [product.id_product for product in products]
     if not product_ids:
         return Product.objects.none()
@@ -88,7 +88,7 @@ def get_products_by_price(products, min_price, max_price):
     return filtered_products
 
 def get_products_by_size(products, size_name):
-    # Get the category id for the given category name
+    # Get the Size id by size name
     size = Size.objects.filter(size=size_name).first()
     if not size:
         return Product.objects.none()
@@ -99,7 +99,7 @@ def get_products_by_size(products, size_name):
     
     size_id = size.id_size
 
-    # Get products associated with the category id using raw SQL with parameters
+    # Get products associated with the size id using raw SQL with parameters
     query = """
         SELECT p.*
         FROM api_product AS p
@@ -134,3 +134,39 @@ def get_all_types():
 
 def get_all_sizes():
     return Size.objects.all()
+
+
+# Order Queries
+
+def get_order_by_user_id(user_id):
+    try:
+        query = """
+            SELECT * FROM api_orderuser WHERE user = %s
+        """
+        order = OrderUser.objects.raw(query, [user_id])
+        return order[0] if order else None
+    except OrderUser.DoesNotExist:
+        return None
+
+def get_all_order_products(user_id):
+     # Get the category id for the given category name
+    order = get_order_by_user_id(user_id)
+    if not order:
+        return Product.objects.none()
+    
+    order_id = order.id_order
+
+    # Get products associated with the category id using raw SQL with parameters
+    query = """
+        SELECT p.*
+        FROM api_product AS p
+        JOIN api_orderitem AS oi ON p.id_product = oi.product_order_id
+        WHERE oi.order_product_id = %s
+    """
+    products = Product.objects.raw(query, [order_id])
+    return products
+
+# Product Reviews
+
+
+

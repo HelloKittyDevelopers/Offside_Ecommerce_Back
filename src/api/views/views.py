@@ -47,9 +47,9 @@ class ProductCategoryView(viewsets.ModelViewSet):
     queryset = ProductCategory.objects.all()
     permission_classes = [AllowAny]
 
-class ProductOrderView(viewsets.ModelViewSet):
-    serializer_class = ProductOrderSerializer
-    queryset = ProductOrder.objects.all()
+class OrderItemView(viewsets.ModelViewSet):
+    serializer_class = OrderItemSerializer
+    queryset = OrderItem.objects.all()
     permission_classes = [AllowAny]
 
 class ProductSizeView(viewsets.ModelViewSet):
@@ -80,4 +80,9 @@ class TypeView(viewsets.ModelViewSet):
 class OrderUserView(viewsets.ModelViewSet):
     serializer_class = OrderUserSerializer
     queryset = OrderUser.objects.all()
+    permission_classes = [AllowAny]
+
+class ReviewView(viewsets.ModelViewSet):
+    serializer_class = ReviewSerializer
+    queryset = Review.objects.all()
     permission_classes = [AllowAny]
