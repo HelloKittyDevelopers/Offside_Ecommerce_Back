@@ -21,6 +21,7 @@ npm install @craco/craco
 npm install react-router-dom
 npm install bootstrap bootstrap
 npm install react-bootstrap bootstrap
+npm install typescript
 
 3. To activate App use:
 

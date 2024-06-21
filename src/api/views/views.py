@@ -1,7 +1,7 @@
 # api/views.py
 from django.shortcuts import render
 from rest_framework import generics
-from api.models import UserInfo, Rol, 
+from api.models import *
 from api.serializer import *
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import viewsets
