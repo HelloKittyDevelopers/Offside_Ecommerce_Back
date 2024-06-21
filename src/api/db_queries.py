@@ -183,12 +183,15 @@ def get_product_reviews(product_id):
     return reviews
 
 def get_product_review_average(product_id):
-    query ="""
+    query = """
         SELECT AVG(rating) AS average_rating FROM api_review WHERE product_id = %s
     """
-    average_rating = Review.objects.raw(query, [product_id])[0].average_rating
+    with connection.cursor() as cursor:
+        cursor.execute(query, [product_id])
+        row = cursor.fetchone()
+    average_rating = row[0] if row[0] is not None else None
+    return float(average_rating) if average_rating is not None else None
 
-    return average_rating
 
 
     

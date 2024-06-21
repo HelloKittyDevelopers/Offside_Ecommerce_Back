@@ -14,13 +14,13 @@ class Category(models.Model):
             models.UniqueConstraint(fields=['id_category'], name='category_id_category_un')
         ]
 
-# class Image(models.Model):
-#     id_image = models.AutoField(primary_key=True)
-#     image = models.BinaryField(null=False)
-#     product_image = models.ForeignKey('Product', on_delete=models.CASCADE, null=False)
+class Image(models.Model):
+     id_image = models.AutoField(primary_key=True)
+     image = models.BinaryField(null=False)
+     product_image = models.ForeignKey('Product', on_delete=models.CASCADE, null=False)
 
-#     def __str__(self):
-#         return f"Image for {self.product_image}"
+     def __str__(self):
+         return f"Image for {self.product_image}"
 
 class OrderState(models.Model):
     id_order_state = models.AutoField(primary_key=True)
@@ -47,7 +47,6 @@ class Product(models.Model):
     price = models.IntegerField(null=False)
     description = models.TextField(blank=True)
     type_category = models.ForeignKey('Type', on_delete=models.SET_NULL, null=True)
-    image=models.ImageField(null=True,blank=True)
     def __str__(self):
         return self.product_name
 
@@ -60,7 +59,7 @@ class ProductCategory(models.Model):
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['category_product_id', 'product_category_id'], name='productcategory_16_pk')
+            models.UniqueConstraint(fields=['category_product', 'product_category'], name='productcategory_16_pk')
         ]
 
 #Used to be ProductOrder, now its the same conexion but has quantity and primary key to identify how many of that product the user is buying
@@ -72,6 +71,7 @@ class OrderItem(models.Model):
 
     def __str__(self):
         return f"{self.order_quantity} of {self.product} in Order #{self.order_user.id_order}"
+
 
     class Meta:
         constraints = [
@@ -87,7 +87,7 @@ class ProductSize(models.Model):
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['product_size_id', 'size_product_id'], name='productsize_pk')
+            models.UniqueConstraint(fields=['product_size', 'size_product'], name='productsize_pk')
         ]
 
 class Rol(models.Model):
@@ -114,7 +114,7 @@ class Stock(models.Model):
 
     class Meta:
         constraints = [
-            models.UniqueConstraint(fields=['product_size_id'], name='stock_unique')
+            models.UniqueConstraint(fields=['product_size'], name='stock_unique')
         ]
 
 class Type(models.Model):
