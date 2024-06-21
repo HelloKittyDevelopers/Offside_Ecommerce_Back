@@ -23,13 +23,15 @@ def get_product_by_id(product_id):
         return None
 
 def get_product_images(product_id):
-    product = get_product_by_id(product_id)
-    query ="""
-        SELECT * FROM api_image WHERE product_image = %s
+    query = """
+        SELECT *
+        FROM api_image 
+        WHERE product_image_id = %s
     """
-    images = Product.objects.raw(query, [product.image])
+    images = Image.objects.raw(query, [product_id])
 
     return images
+
 
 def get_products_by_category(category_name):
     # Get the category id for the given category name
@@ -79,9 +81,9 @@ def get_products_by_price(products, min_price, max_price):
         SELECT * FROM api_product
         WHERE id_product IN %s AND price BETWEEN %s AND %s
     """
-    if(min_price == null and max_price != null):
+    if(min_price is None and max_price is not None):
         filtered_products = Product.objects.raw(query, [tuple(product_ids), 0, max_price])
-    elif(min_price != null and max_price == null):
+    elif(min_price is not None and max_price is None):
         filtered_products = Product.objects.raw(query, [tuple(product_ids), min_price, 999999999])
     else:   
         filtered_products = Product.objects.raw(query, [tuple(product_ids), min_price, max_price])
@@ -106,20 +108,20 @@ def get_products_by_size(products, size_name):
         JOIN api_productsize AS ps ON p.id_product = ps.product_size_id
         WHERE p.id_product IN %s AND ps.size_product_id = %s
     """
-    filtered_products = Product.objects.raw(query, [tuple(product_ids),size.id])
+    filtered_products = Product.objects.raw(query, [tuple(product_ids),size_id])
     return filtered_products
 
 def get_products_by_category_by_filters(category_name, type_name, min_price, max_price, size_name):
 
     products = get_products_by_category(category_name)
 
-    if(type_name != null):
+    if type_name is not None:
         products = get_products_by_type(products, type_name)
     
-    if(min_price != null or max_price != null):
+    if(min_price is not None or max_price is not None):
         products = get_products_by_price(products, min_price, max_price)
     
-    if(size_name != null):
+    if(size_name is not None):
         products = get_products_by_size(products, size_name)
     
     return products
