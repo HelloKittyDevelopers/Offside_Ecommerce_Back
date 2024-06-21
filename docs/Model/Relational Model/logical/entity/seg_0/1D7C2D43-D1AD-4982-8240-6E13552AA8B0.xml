@@ -1,0 +1,111 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="1D7C2D43-D1AD-4982-8240-6E13552AA8B0" name="USER">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 02:03:54 UTC</createdTime>
+<ownerDesignName>Relational Model</ownerDesignName>
+<engineerTo>
+<item key="5E0C973E-9EBC-ADF0-6EFC-AF1397737A4F" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="Id_user" id="E9532792-F647-BA09-A657-D263606AA334">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 02:04:01 UTC</createdTime>
+<ownerDesignName>Relational Model</ownerDesignName>
+<engineerTo>
+<item key="5E0C973E-9EBC-ADF0-6EFC-AF1397737A4F" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="username" id="796A27FA-502B-C5DD-4B6D-09F8ED2561BA">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 02:24:06 UTC</createdTime>
+<ownerDesignName>Relational Model</ownerDesignName>
+<engineerTo>
+<item key="5E0C973E-9EBC-ADF0-6EFC-AF1397737A4F" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>80 CHAR</dataTypeSize>
+<ownDataTypeParameters>80 CHAR,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="encrypted_password" id="D4FED213-64BD-5777-2CDA-4D0E8C898648">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 02:22:42 UTC</createdTime>
+<ownerDesignName>Relational Model</ownerDesignName>
+<engineerTo>
+<item key="5E0C973E-9EBC-ADF0-6EFC-AF1397737A4F" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>80 BYTE</dataTypeSize>
+<ownDataTypeParameters>80 BYTE,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="name" id="A89457F1-8A90-E18E-AC44-E6CF35003E84">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 02:04:06 UTC</createdTime>
+<ownerDesignName>Relational Model</ownerDesignName>
+<engineerTo>
+<item key="5E0C973E-9EBC-ADF0-6EFC-AF1397737A4F" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>80 CHAR</dataTypeSize>
+<ownDataTypeParameters>80 CHAR,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="email" id="35365E19-0531-FD05-51DC-36085AAFA734">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 02:05:07 UTC</createdTime>
+<ownerDesignName>Relational Model</ownerDesignName>
+<engineerTo>
+<item key="5E0C973E-9EBC-ADF0-6EFC-AF1397737A4F" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>80 CHAR</dataTypeSize>
+<ownDataTypeParameters>80 CHAR,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="phone_number" id="38B4D13A-645F-0FEB-FC3D-DD7601EB710E">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 02:07:44 UTC</createdTime>
+<ownerDesignName>Relational Model</ownerDesignName>
+<engineerTo>
+<item key="5E0C973E-9EBC-ADF0-6EFC-AF1397737A4F" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>80 CHAR</dataTypeSize>
+<ownDataTypeParameters>80 CHAR,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="98E86DF4-DA58-A407-7C7D-C5479AA124DA" name="USER PK">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 02:05:12 UTC</createdTime>
+<ownerDesignName>Relational Model</ownerDesignName>
+<engineerTo>
+<item key="5E0C973E-9EBC-ADF0-6EFC-AF1397737A4F" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>E9532792-F647-BA09-A657-D263606AA334</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>
