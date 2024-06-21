@@ -16,4 +16,4 @@ coreapi
 setuptools
 pytest
 pytest-django
-pkg_resources
+Pillow

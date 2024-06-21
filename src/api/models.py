@@ -14,13 +14,13 @@ class Category(models.Model):
             models.UniqueConstraint(fields=['id_category'], name='category_id_category_un')
         ]
 
-class Image(models.Model):
-    id_image = models.AutoField(primary_key=True)
-    image = models.BinaryField(null=False)
-    product_image = models.ForeignKey('Product', on_delete=models.CASCADE, null=False)
+# class Image(models.Model):
+#     id_image = models.AutoField(primary_key=True)
+#     image = models.BinaryField(null=False)
+#     product_image = models.ForeignKey('Product', on_delete=models.CASCADE, null=False)
 
-    def __str__(self):
-        return f"Image for {self.product_image}"
+#     def __str__(self):
+#         return f"Image for {self.product_image}"
 
 class OrderState(models.Model):
     id_order_state = models.AutoField(primary_key=True)
@@ -47,7 +47,7 @@ class Product(models.Model):
     price = models.IntegerField(null=False)
     description = models.TextField(blank=True)
     type_category = models.ForeignKey('Type', on_delete=models.SET_NULL, null=True)
-
+    image=models.ImageField(null=True,blank=True)
     def __str__(self):
         return self.product_name
 

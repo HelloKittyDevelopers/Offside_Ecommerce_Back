@@ -9,7 +9,7 @@
 
 2. After activating virtual env install following libraries:
 
-pip install psycopg2
+pip install psycopg2 
 pip install django
 pip install django-allauth
 pip install django-crispy-forms

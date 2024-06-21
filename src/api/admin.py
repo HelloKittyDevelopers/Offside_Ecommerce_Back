@@ -1,9 +1,9 @@
 from django.contrib import admin
-from api.models import Category, Image, OrderState, UserInfo, Product, ProductCategory, OrderItem, ProductSize, Rol, Size, Stock, Type, OrderUser, Review
+from api.models import Category,  OrderState, UserInfo, Product, ProductCategory, OrderItem, ProductSize, Rol, Size, Stock, Type, OrderUser, Review
 
 # Register your models here.
 admin.site.register(Category)
-admin.site.register(Image)
+# #admin.site.register(Image)
 admin.site.register(OrderState)
 admin.site.register(UserInfo)
 admin.site.register(Product)

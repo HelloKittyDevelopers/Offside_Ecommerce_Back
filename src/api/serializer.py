@@ -9,10 +9,10 @@ class CategorySerializer(ModelSerializer):
         model = Category
         fields = ['id_category', 'category']
 
-class ImageSerializer(ModelSerializer):
-    class Meta:
-        model = Image
-        fields = ['id_image', 'image', 'product_image']
+# class ImageSerializer(ModelSerializer):
+#     class Meta:
+#         model = Image
+#         fields = ['id_image', 'image', 'product_image']
 
 class OrderStateSerializer(ModelSerializer):
     class Meta:

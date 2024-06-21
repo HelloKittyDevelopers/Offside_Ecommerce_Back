@@ -5,7 +5,7 @@ from rest_framework.documentation import include_docs_urls
 
 router = DefaultRouter()
 router.register(r'categories', CategoryView, 'categories')
-router.register(r'images', ImageView, 'images')
+# router.register(r'images', ImageView, 'images')
 router.register(r'order_states', OrderStateView, 'order_states')
 router.register(r'users', UserInfoView, 'users')
 router.register(r'products', ProductView, 'products')

@@ -1,11 +1,11 @@
 # api/views.py
 from django.shortcuts import render
 from rest_framework import generics
-from api.models import *
+from api.models import UserInfo, Rol, 
 from api.serializer import *
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import viewsets
-from . import db_queries
+
 
 # Create views
 class CreateUserView(generics.CreateAPIView):
@@ -28,10 +28,10 @@ class CategoryView(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     permission_classes = [AllowAny]
 
-class ImageView(viewsets.ModelViewSet):
-    serializer_class = ImageSerializer
-    queryset = Image.objects.all()
-    permission_classes = [AllowAny]
+# class ImageView(viewsets.ModelViewSet):
+#     serializer_class = ImageSerializer
+#     queryset = Image.objects.all()
+#     permission_classes = [AllowAny]
 
 class OrderStateView(viewsets.ModelViewSet):
     serializer_class = OrderStateSerializer
