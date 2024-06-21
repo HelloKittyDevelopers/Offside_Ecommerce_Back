@@ -143,30 +143,34 @@ def get_all_sizes():
 def get_order_by_user_id(user_id):
     try:
         query = """
-            SELECT * FROM api_orderuser WHERE user = %s
+            SELECT * 
+            FROM api_orderuser 
+            WHERE user_id = %s
         """
         order = OrderUser.objects.raw(query, [user_id])
         return order[0] if order else None
     except OrderUser.DoesNotExist:
         return None
 
+
 def get_all_order_products(user_id):
-     # Get the category id for the given category name
+    # Get the order for the given user_id
     order = get_order_by_user_id(user_id)
     if not order:
         return Product.objects.none()
     
     order_id = order.id_order
 
-    # Get products associated with the category id using raw SQL with parameters
+    # Get products associated with the order_id using raw SQL with parameters
     query = """
         SELECT p.*
         FROM api_product AS p
-        JOIN api_orderitem AS oi ON p.id_product = oi.product_order_id
-        WHERE oi.order_product_id = %s
+        JOIN api_orderitem AS oi ON p.id_product = oi.product_id
+        WHERE oi.order_user_id = %s
     """
     products = Product.objects.raw(query, [order_id])
     return products
+
 
 # Product Reviews
 

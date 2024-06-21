@@ -3,14 +3,28 @@ from django.test import TestCase
 from api.db_queries import (
     get_all_products, get_product_by_id, get_product_images, get_products_by_category,
     get_products_by_type, get_products_by_price, get_products_by_size,
-    get_products_by_category_by_filters, get_all_categories, get_all_types, get_all_sizes
+    get_products_by_category_by_filters, get_all_categories, get_all_types, get_all_sizes, get_order_by_user_id, 
+    get_all_order_products, get_product_reviews, get_product_review_average
 )
-from api.models import Product, Category, ProductCategory, Type, Size, ProductSize, Image
+from api.models import Rol, UserInfo, Product, Category, ProductCategory, Type, Size, ProductSize, Image, OrderUser, OrderItem, Review
 
 @pytest.mark.django_db
 class ProductTestCase(TestCase):
 
     def setUp(self):
+        # Create a test role
+        self.rol = Rol.objects.create(rol='Test Role')
+
+        #Create user
+        self.user_info = UserInfo.objects.create(
+            name='John Doe',
+            encrypted_password='hashed_password', 
+            user_name='johndoe',
+            email='johndoe@example.com',
+            phone_number='123-456-7890',
+            user_rol=self.rol 
+        )
+
         # Create test categories
         self.category = Category.objects.create(category='Ropa')
         self.category_shoes = Category.objects.create(category='Zapatos')
@@ -36,6 +50,11 @@ class ProductTestCase(TestCase):
         
         # Create test images
         self.image1 = Image.objects.create(product_image=self.product1, image=b'somebinarydata')
+
+        self.order = OrderUser.objects.create(id_order=1, shipping_price=0, total_payment=0, address=" ", user=self.user_info, taxes=0)
+
+        self.orderItem1 = OrderItem.objects.create(id_order_item=1, product=self.product1, order_user=self.order, order_quantity=2)
+        self.orderItem2 = OrderItem.objects.create(id_order_item=2, product=self.product2, order_user=self.order, order_quantity=1)
         
     def test_get_all_products(self):
         products = get_all_products()
@@ -120,3 +139,21 @@ class ProductTestCase(TestCase):
         self.assertEqual(len(sizes), 2)
         self.assertIn(self.size_m, sizes)
         self.assertIn(self.size_xxl, sizes)
+
+    def test_get_order_by_user_id(self):
+        order = get_order_by_user_id(self.order.user.id_user)
+        self.assertIsNotNone(order)
+        self.assertEqual(order.id_order, self.order.id_order)
+        self.assertEqual(order.user, self.order.user)
+
+        non_existing_order = get_order_by_user_id(9)
+        self.assertIsNone(non_existing_order)
+
+    def test_get_all_order_products(self):
+        products = get_all_order_products(self.user_info.id_user)
+        self.assertEqual(len(products), 2)
+        self.assertIn(self.product1, products)
+        self.assertIn(self.product2, products)
+
+        products_empty = get_all_order_products(999)
+        self.assertEqual(len(products_empty), 0)
