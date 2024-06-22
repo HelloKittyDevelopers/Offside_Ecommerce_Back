@@ -31,7 +31,7 @@ class UserInfoSerializer(ModelSerializer):
 class ProductSerializer(ModelSerializer):
     class Meta:
         model = Product
-        fields = ['id_product', 'product_name', 'price', 'description', 'type_category']
+        fields = ['id_product', 'product_name', 'price', 'description', 'type_category', 'image']
 
 class ProductCategorySerializer(ModelSerializer):
     class Meta:
