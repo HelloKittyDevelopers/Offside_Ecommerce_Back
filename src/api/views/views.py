@@ -5,6 +5,7 @@ from api.models import *
 from api.serializer import *
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import viewsets
+from api.db_queries import get_product_by_id
 
 
 # Create views
@@ -22,6 +23,13 @@ class ProductView(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
     queryset = Product.objects.all()
     permission_classes = [AllowAny]
+class ProductDetailView(generics.RetrieveAPIView):
+    serializer_class = ProductSerializer
+    permission_classes = [AllowAny]
+
+    def get_object(self):
+        product_id = self.kwargs['pk']
+        return get_product_by_id(product_id)
 
 class CategoryView(viewsets.ModelViewSet):
     serializer_class = CategorySerializer

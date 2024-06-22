@@ -22,6 +22,9 @@ npm install react-router-dom
 npm install bootstrap bootstrap
 npm install react-bootstrap bootstrap
 npm install typescript
+npm install yarn
+yarn add redux react-redux redux-thunk redux-devtools-extension
+
 
 3. To activate App use:
 

@@ -22,5 +22,6 @@ router.register(r'reviews', ReviewView, 'reviews')
 
 urlpatterns = [
     path("", include(router.urls)),
-    path('docs/', include_docs_urls(title="Home API"))
+    path('docs/', include_docs_urls(title="Home API")),
+    
 ]
