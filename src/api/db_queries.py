@@ -1,12 +1,12 @@
-# db_queries.py
-
 from .models import (
     Category, Image, OrderState, UserInfo, Product,
     ProductCategory, OrderItem, ProductSize, Rol, Size,
     Stock, Type, OrderUser, Review
 )
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Count
 from django.db import connection
+
 
 # Product Functions
 def get_all_products():
@@ -108,7 +108,7 @@ def get_products_by_size(products, size_name):
         JOIN api_productsize AS ps ON p.id_product = ps.product_size_id
         WHERE p.id_product IN %s AND ps.size_product_id = %s
     """
-    filtered_products = Product.objects.raw(query, [tuple(product_ids),size_id])
+    filtered_products = Product.objects.raw(query, [tuple(product_ids), size_id])
     return filtered_products
 
 def get_products_by_category_by_filters(category_name, type_name, min_price, max_price, size_name):
@@ -190,5 +190,6 @@ def get_product_review_average(product_id):
 
     return average_rating
 
-
-    
+def get_product_review_count(product_id):
+    review_count = Review.objects.filter(product_id=product_id).aggregate(count=Count('id_review'))['count']
+    return review_count

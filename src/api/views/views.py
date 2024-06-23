@@ -5,7 +5,10 @@ from api.models import *
 from api.serializer import *
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import viewsets
-from api.db_queries import get_product_by_id
+from api.db_queries import *
+from django.shortcuts import get_object_or_404
+from rest_framework.response import Response
+from django.db.models import Avg, Count
 
 
 # Create views
@@ -29,8 +32,23 @@ class ProductDetailView(generics.RetrieveAPIView):
 
     def get_object(self):
         product_id = self.kwargs['pk']
-        return get_product_by_id(product_id)
+        return get_object_or_404(Product, pk=product_id)
 
+    def get(self, request, *args, **kwargs):
+        product = self.get_object()
+        serializer = self.get_serializer(product)
+        
+        reviews = Review.objects.filter(product_id=product.id)
+        review_average = reviews.aggregate(average_rating=Avg('rating'))['average_rating'] or 0
+        review_count = reviews.aggregate(count=Count('id_review'))['count'] or 0
+        reviews_serializer = ReviewSerializer(reviews, many=True)
+        
+        data = serializer.data
+        data['reviews'] = reviews_serializer.data
+        data['average_rating'] = review_average
+        data['review_count'] = review_count
+
+        return Response(data)
 class CategoryView(viewsets.ModelViewSet):
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
