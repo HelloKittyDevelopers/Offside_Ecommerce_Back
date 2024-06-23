@@ -44,14 +44,12 @@ class ProductDetailView(generics.RetrieveAPIView):
     def get(self, request, *args, **kwargs):
         product = self.get_object()
         serializer = self.get_serializer(product)
-        
-        reviews = Review.objects.filter(product_id=product.id)
+
+        reviews = Review.objects.filter(product_id=product.id_product)
         review_average = reviews.aggregate(average_rating=Avg('rating'))['average_rating'] or 0
         review_count = reviews.aggregate(count=Count('id_review'))['count'] or 0
-        reviews_serializer = ReviewSerializer(reviews, many=True)
-        
+
         data = serializer.data
-        data['reviews'] = reviews_serializer.data
         data['average_rating'] = review_average
         data['review_count'] = review_count
 

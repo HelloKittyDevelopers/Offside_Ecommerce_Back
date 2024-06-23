@@ -1,7 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
 
-
 class Category(models.Model):
     id_category = models.AutoField(primary_key=True)
     category = models.CharField(max_length=80, null=False)
@@ -10,15 +9,14 @@ class Category(models.Model):
         return self.category
 
     class Meta:
-        app_label = 'api'  # Ajusta esto según el nombre real de tu aplicación
-
+        app_label = 'api'
         constraints = [
             models.UniqueConstraint(fields=['id_category'], name='category_id_category_un')
         ]
 
 class Image(models.Model):
     id_image = models.AutoField(primary_key=True)
-    image = models.ImageField(null=False, blank= True)
+    image = models.ImageField(null=False, blank=True)
     product_image = models.ForeignKey('Product', on_delete=models.CASCADE, null=False)
 
     def __str__(self):
@@ -37,6 +35,7 @@ class Product(models.Model):
     price = models.IntegerField(null=False)
     description = models.TextField(blank=True)
     type_category = models.ForeignKey('Type', on_delete=models.SET_NULL, null=True)
+
     def __str__(self):
         return self.product_name
 
@@ -52,7 +51,6 @@ class ProductCategory(models.Model):
             models.UniqueConstraint(fields=['category_product_id', 'product_category_id'], name='productcategory_16_pk')
         ]
 
-#Used to be ProductOrder, now its the same conexion but has quantity and primary key to identify how many of that product the user is buying
 class OrderItem(models.Model):
     id_order_item = models.AutoField(primary_key=True)
     order_quantity = models.IntegerField(null=False)
@@ -90,7 +88,7 @@ class Stock(models.Model):
     id_stock = models.AutoField(primary_key=True)
     quantity = models.IntegerField(null=False)
     product_size = models.ForeignKey(ProductSize, on_delete=models.CASCADE)
-    
+
     def __str__(self):
         return f"{self.quantity} units of {self.product_size}"
 
@@ -119,8 +117,6 @@ class OrderUser(models.Model):
     def __str__(self):
         return f"Order #{self.id_order} by {self.user}"
 
-
-#Review Connects with product and userinfo, Review can only have 1 product and user while product and user can have many reviews
 class Review(models.Model):
     id_review = models.AutoField(primary_key=True)
     rating = models.IntegerField(null=False)
@@ -131,7 +127,7 @@ class Review(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f"Review for {self.product} by {self.user.user_name}"
+        return f"Review for {self.product} by {self.user.username}"
 
     class Meta:
         constraints = [
