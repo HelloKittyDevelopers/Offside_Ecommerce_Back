@@ -1,21 +1,28 @@
-# api/views.py
 from django.shortcuts import render
 from rest_framework import generics
 from api.models import *
 from api.serializer import *
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import viewsets
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    
+    def validate(self, attrs):
+        data = super().validate(attrs)
 
-# Create views
-class CreateUserView(generics.CreateAPIView):
-    queryset = UserInfo.objects.all()
-    serializer_class = UserInfoSerializer
-    permission_classes = [AllowAny]
+        data['username'] = self.username_field
+        data['email'] = self.user.email
 
-class CreateRol(generics.CreateAPIView):
-    queryset = Rol.objects.all()
-    serializer_class = RolSerializer
+        return data    
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
+
+class UserProfileView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
     permission_classes = [AllowAny]
 
 class ProductView(viewsets.ModelViewSet):
@@ -28,23 +35,18 @@ class CategoryView(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     permission_classes = [AllowAny]
 
-# class ImageView(viewsets.ModelViewSet):
-#     serializer_class = ImageSerializer
-#     queryset = Image.objects.all()
-#     permission_classes = [AllowAny]
+class ImageView(viewsets.ModelViewSet):
+    serializer_class = ImageSerializer
+    queryset = Image.objects.all()
+    permission_classes = [AllowAny]
 
 class OrderStateView(viewsets.ModelViewSet):
     serializer_class = OrderStateSerializer
     queryset = OrderState.objects.all()
     permission_classes = [AllowAny]
 
-class UserInfoView(viewsets.ModelViewSet):
-    serializer_class = UserInfoSerializer
-    queryset = UserInfo.objects.all()
-    permission_classes = [AllowAny]
-
 class ProductCategoryView(viewsets.ModelViewSet):
-    serializer_class = ProductCategorySerializer
+    serializer_class = ProductCategorySerializer  # Asegúrate de que esto esté definido en tu archivo serializer.py
     queryset = ProductCategory.objects.all()
     permission_classes = [AllowAny]
 
@@ -56,11 +58,6 @@ class OrderItemView(viewsets.ModelViewSet):
 class ProductSizeView(viewsets.ModelViewSet):
     serializer_class = ProductSizeSerializer
     queryset = ProductSize.objects.all()
-    permission_classes = [AllowAny]
-
-class RolView(viewsets.ModelViewSet):
-    serializer_class = RolSerializer
-    queryset = Rol.objects.all()
     permission_classes = [AllowAny]
 
 class SizeView(viewsets.ModelViewSet):

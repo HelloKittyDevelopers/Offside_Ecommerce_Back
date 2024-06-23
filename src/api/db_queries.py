@@ -137,7 +137,6 @@ def get_all_types():
 def get_all_sizes():
     return Size.objects.all()
 
-
 # Order Queries
 
 def get_order_by_user_id(user_id):

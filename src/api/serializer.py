@@ -4,29 +4,25 @@ from api.models import *
 
 # serializers.py
 
+class UserSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['id', 'username','email']
+
 class CategorySerializer(ModelSerializer):
     class Meta:
         model = Category
         fields = ['id_category', 'category']
 
-# class ImageSerializer(ModelSerializer):
-#     class Meta:
-#         model = Image
-#         fields = ['id_image', 'image', 'product_image']
+class ImageSerializer(ModelSerializer):
+    class Meta:
+        model = Image
+        fields = ['id_image', 'image', 'product_image']
 
 class OrderStateSerializer(ModelSerializer):
     class Meta:
         model = OrderState
         fields = ['id_order_state', 'order_state']
-
-class UserInfoSerializer(ModelSerializer):
-    class Meta:
-        model = UserInfo
-        fields = ['id_user', 'name', 'encrypted_password', 'user_name', 'email', 'phone_number', 'user_rol']
-
-    def create(self, validated_data):
-        user = UserInfo.objects.create(**validated_data)
-        return user
 
 class ProductSerializer(ModelSerializer):
     class Meta:
@@ -47,11 +43,6 @@ class ProductSizeSerializer(ModelSerializer):
     class Meta:
         model = ProductSize
         fields = ['product_size', 'size_product']
-
-class RolSerializer(ModelSerializer):
-    class Meta:
-        model = Rol
-        fields = ['id_rol', 'rol']
 
 class SizeSerializer(ModelSerializer):
     class Meta:

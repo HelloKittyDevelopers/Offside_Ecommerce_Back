@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import User
+
 
 class Category(models.Model):
     id_category = models.AutoField(primary_key=True)
@@ -14,13 +16,13 @@ class Category(models.Model):
             models.UniqueConstraint(fields=['id_category'], name='category_id_category_un')
         ]
 
-# class Image(models.Model):
-#     id_image = models.AutoField(primary_key=True)
-#     image = models.BinaryField(null=False)
-#     product_image = models.ForeignKey('Product', on_delete=models.CASCADE, null=False)
+class Image(models.Model):
+    id_image = models.AutoField(primary_key=True)
+    image = models.ImageField(null=False, blank= True)
+    product_image = models.ForeignKey('Product', on_delete=models.CASCADE, null=False)
 
-#     def __str__(self):
-#         return f"Image for {self.product_image}"
+    def __str__(self):
+        return f"Image for {self.product_image}"
 
 class OrderState(models.Model):
     id_order_state = models.AutoField(primary_key=True)
@@ -29,25 +31,12 @@ class OrderState(models.Model):
     def __str__(self):
         return self.order_state
 
-class UserInfo(models.Model):   
-    id_user = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=80, null=False)
-    encrypted_password = models.CharField(max_length=80, null=False)
-    user_name = models.CharField(max_length=80, null=False)
-    email = models.CharField(max_length=80, null=False)
-    phone_number = models.CharField(max_length=80)
-    user_rol = models.ForeignKey('Rol', on_delete=models.SET_NULL, null=True)
-
-    def __str__(self):
-        return self.user_name
-
 class Product(models.Model):
     id_product = models.AutoField(primary_key=True)
     product_name = models.CharField(max_length=4000, null=False)
     price = models.IntegerField(null=False)
     description = models.TextField(blank=True)
     type_category = models.ForeignKey('Type', on_delete=models.SET_NULL, null=True)
-    image=models.ImageField(null=True,blank=True)
     def __str__(self):
         return self.product_name
 
@@ -90,13 +79,6 @@ class ProductSize(models.Model):
             models.UniqueConstraint(fields=['product_size_id', 'size_product_id'], name='productsize_pk')
         ]
 
-class Rol(models.Model):
-    id_rol = models.AutoField(primary_key=True)
-    rol = models.CharField(max_length=80, null=False)
-
-    def __str__(self):
-        return self.rol
-
 class Size(models.Model):
     id_size = models.AutoField(primary_key=True)
     size = models.CharField(max_length=5, null=False)
@@ -130,7 +112,7 @@ class OrderUser(models.Model):
     shipping_price = models.FloatField(null=False)
     total_payment = models.FloatField(null=False)
     address = models.CharField(max_length=80, null=False)
-    user = models.ForeignKey(UserInfo, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     order_state = models.ForeignKey(OrderState, on_delete=models.SET_NULL, null=True)
     taxes = models.FloatField(null=False)
 
@@ -146,7 +128,7 @@ class Review(models.Model):
     creation_date = models.DateField(auto_now_add=True, null=False)
 
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='reviews')
-    user = models.ForeignKey(UserInfo, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return f"Review for {self.product} by {self.user.user_name}"
@@ -155,4 +137,3 @@ class Review(models.Model):
         constraints = [
             models.UniqueConstraint(fields=['product', 'user'], name='unique_review')
         ]
-
