@@ -1,6 +1,6 @@
 from .models import (
-    Category, Image, OrderState, UserInfo, Product,
-    ProductCategory, OrderItem, ProductSize, Rol, Size,
+    Category, Image, OrderState, Product,
+    ProductCategory, OrderItem, ProductSize, Size,
     Stock, Type, OrderUser, Review
 )
 from django.core.exceptions import ObjectDoesNotExist
