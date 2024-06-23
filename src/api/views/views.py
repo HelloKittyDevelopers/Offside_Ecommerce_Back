@@ -36,10 +36,10 @@ class CategoryView(viewsets.ModelViewSet):
     queryset = Category.objects.all()
     permission_classes = [AllowAny]
 
-# class ImageView(viewsets.ModelViewSet):
-#     serializer_class = ImageSerializer
-#     queryset = Image.objects.all()
-#     permission_classes = [AllowAny]
+class ImageView(viewsets.ModelViewSet):
+    serializer_class = ImageSerializer
+    queryset = Image.objects.all()
+    permission_classes = [AllowAny]
 
 class OrderStateView(viewsets.ModelViewSet):
     serializer_class = OrderStateSerializer

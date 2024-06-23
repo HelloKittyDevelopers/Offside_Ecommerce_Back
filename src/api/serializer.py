@@ -9,10 +9,10 @@ class CategorySerializer(ModelSerializer):
         model = Category
         fields = ['id_category', 'category']
 
-# class ImageSerializer(ModelSerializer):
-#     class Meta:
-#         model = Image
-#         fields = ['id_image', 'image', 'product_image']
+class ImageSerializer(ModelSerializer):
+    class Meta:
+        model = Image
+        fields = ['id_image', 'image', 'product_image']
 
 class OrderStateSerializer(ModelSerializer):
     class Meta:
@@ -31,7 +31,7 @@ class UserInfoSerializer(ModelSerializer):
 class ProductSerializer(ModelSerializer):
     class Meta:
         model = Product
-        fields = ['id_product', 'product_name', 'price', 'description', 'type_category', 'image']
+        fields = ['id_product', 'product_name', 'price', 'description', 'type_category']
 
 class ProductCategorySerializer(ModelSerializer):
     class Meta:
