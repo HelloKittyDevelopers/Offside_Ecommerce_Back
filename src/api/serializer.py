@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
 from api.models import *
+from django.db.models import Avg, Count
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -38,8 +39,8 @@ class ProductSerializer(serializers.ModelSerializer):
     reviews = ReviewSerializer(many=True, read_only=True)
     sizes = serializers.SerializerMethodField()
     images = serializers.SerializerMethodField()
-    average_rating = serializers.FloatField(read_only=True)
-    review_count = serializers.IntegerField(read_only=True)
+    average_rating = serializers.SerializerMethodField()
+    review_count = serializers.SerializerMethodField()
 
     class Meta:
         model = Product
@@ -53,6 +54,11 @@ class ProductSerializer(serializers.ModelSerializer):
         images = Image.objects.filter(product_image=obj)
         return ImageSerializer(images, many=True).data
 
+    def get_average_rating(self, obj):
+        return obj.reviews.aggregate(Avg('rating'))['rating__avg'] or 0
+
+    def get_review_count(self, obj):
+        return obj.reviews.aggregate(Count('id_review'))['id_review__count'] or 0
 class ProductCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = ProductCategory

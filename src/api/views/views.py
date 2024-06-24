@@ -49,13 +49,9 @@ class ProductDetailView(generics.RetrieveAPIView):
         review_average = reviews.aggregate(average_rating=Avg('rating'))['average_rating'] or 0
         review_count = reviews.aggregate(count=Count('id_review'))['count'] or 0
 
-        images = Image.objects.filter(product_image=product)
-        images_serializer = ImageSerializer(images, many=True)
-
         data = serializer.data
         data['average_rating'] = review_average
         data['review_count'] = review_count
-        data['images'] = images_serializer.data
 
         return Response(data)
 
