@@ -38,10 +38,12 @@ class ProductSerializer(serializers.ModelSerializer):
     reviews = ReviewSerializer(many=True, read_only=True)
     sizes = serializers.SerializerMethodField()
     images = serializers.SerializerMethodField()
+    average_rating = serializers.FloatField(read_only=True)
+    review_count = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Product
-        fields = ['id_product', 'product_name', 'price', 'description', 'type_category', 'reviews', 'sizes', 'images']
+        fields = ['id_product', 'product_name', 'price', 'description', 'type_category', 'reviews', 'sizes', 'images', 'average_rating', 'review_count']
 
     def get_sizes(self, obj):
         sizes = Stock.objects.filter(product_size__product_size=obj)
