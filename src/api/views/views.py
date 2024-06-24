@@ -58,6 +58,43 @@ class ProductDetailView(generics.RetrieveAPIView):
         data['images'] = images_serializer.data
 
         return Response(data)
+
+class ProductListingView(generics.ListAPIView):
+    serializer_class = ProductSerializer
+    permission_classes = [AllowAny]
+
+class ProductListingView(generics.ListAPIView):
+    serializer_class = ProductSerializer
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        type_name = self.kwargs['type']
+        category_name = self.request.query_params.get('category', None)
+        min_price = self.request.query_params.get('min_price', None)
+        max_price = self.request.query_params.get('max_price', None)
+        size_name = self.request.query_params.get('size', None)
+
+        if all(param is None or param == '' for param in [category_name, min_price, max_price, size_name]):
+            # Handle case where all params are None or empty
+            products = get_products_by_type(type_name)
+        else:
+            if min_price is not None:
+                min_price = float(min_price)
+            if max_price is not None:
+                max_price = float(max_price)
+
+            products = get_products_by_category_by_filters(category_name, type_name, min_price, max_price, size_name)
+
+        return products
+    
+    def list(self, request, *args, **kwargs):
+        try:
+            queryset = self.get_queryset()
+            serializer = self.get_serializer(queryset, many=True)
+            return Response(serializer.data)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
 class CategoryView(viewsets.ModelViewSet):
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
