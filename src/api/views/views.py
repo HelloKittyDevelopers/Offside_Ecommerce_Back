@@ -1,8 +1,15 @@
-from django.shortcuts import render
+from api.models import *
+from api.serializer import *
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
+from rest_framework import viewsets
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework.response import Response
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import generics
 from api.models import *
 from api.serializer import *
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from rest_framework import viewsets
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -10,23 +17,29 @@ from api.db_queries import *
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from django.db.models import Avg, Count
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from django.shortcuts import render
+from rest_framework.views import APIView
+from django.contrib.auth.hashers import make_password
+from rest_framework import status
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     
     def validate(self, attrs):
         data = super().validate(attrs)
 
-        data['username'] = self.username_field
-        data['email'] = self.user.email
+        serializer = UserSerializerWithToken(self.user).data
+
+        for k, v in serializer.items():
+            data[k] = v
 
         return data    
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
-class UserProfileView(generics.CreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+
+class RegisterUserView(APIView):
     permission_classes = [AllowAny]
 
 class ProductListView(viewsets.ViewSet):
@@ -85,12 +98,39 @@ class ProductListingView(generics.ListAPIView):
             products = get_products_by_category_by_filters(category_name, type_name, min_price, max_price, size_name)
 
         return products
-    
+
     def list(self, request, *args, **kwargs):
         try:
             queryset = self.get_queryset()
             serializer = self.get_serializer(queryset, many=True)
-            return Response(serializer.data)
+            data = serializer.data
+
+            # Add average_rating and review_count to each product
+            for product_data in data:
+                product_id = product_data['id_product']
+                reviews = Review.objects.filter(product_id=product_id)
+                review_average = reviews.aggregate(average_rating=Avg('rating'))['average_rating'] or 0
+                review_count = reviews.aggregate(count=Count('id_review'))['count'] or 0
+
+                product_data['average_rating'] = review_average
+                product_data['review_count'] = review_count
+
+            # Fetch all categories and sizes
+            categories = Category.objects.all()
+            sizes = Size.objects.all()
+
+            # Serialize categories and sizes
+            category_serializer = CategorySerializer(categories, many=True)
+            size_serializer = SizeSerializer(sizes, many=True)
+
+            # Append categories and sizes to the response data
+            response_data = {
+                'products': data,
+                'categories': category_serializer.data,
+                'sizes': size_serializer.data
+            }
+
+            return Response(response_data)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
