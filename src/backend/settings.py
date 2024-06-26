@@ -97,7 +97,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "store",
         "USER": "postgres",
-        "PASSWORD": "amotro99",
+        "PASSWORD": "postgres",
         "HOST": "localhost",
         "PORT": "5432",
     }
@@ -194,7 +194,7 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=90),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 
 }

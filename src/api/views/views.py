@@ -1,33 +1,64 @@
-from django.shortcuts import render
-from rest_framework import generics
 from api.models import *
 from api.serializer import *
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from rest_framework import viewsets
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from api.db_queries import *
-from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
-from django.db.models import Avg, Count
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     
     def validate(self, attrs):
         data = super().validate(attrs)
 
-        data['username'] = self.username_field
-        data['email'] = self.user.email
+        serializer = UserSerializerWithToken(self.user).data
+
+        for k, v in serializer.items():
+            data[k] = v
 
         return data    
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
-class UserProfileView(generics.CreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+
+class RegisterUserView(APIView):
     permission_classes = [AllowAny]
+
+    def post(self, request):
+        data = request.data
+
+        try:
+            user = User.objects.create(
+                first_name = data['first_name'],
+                last_name = data['last_name'],
+                username=data['username'],
+                email=data['email'],
+                password=make_password(data['password'])
+            )
+        except: 
+            message = {'detail' : 'El usuario con este email ya existe'}
+            return Response(message, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = UserSerializerWithToken(user, many=False)
+        return Response(serializer.data)
+
+
+class UserProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+    
+class getUsers(APIView):
+    permission_classes = [IsAdminUser]
+
+    def get(self, request):
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
 
 class ProductView(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
