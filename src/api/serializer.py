@@ -74,6 +74,9 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         fields = ['id_product', 'product_name', 'price', 'description', 'type_category', 'reviews', 'sizes', 'images', 'average_rating', 'review_count']
 
+    type_category = serializers.PrimaryKeyRelatedField(queryset=Type.objects.all())
+    categories = serializers.PrimaryKeyRelatedField(many=True, queryset=Category.objects.all())
+
     def get_sizes(self, obj):
         sizes = Stock.objects.filter(product_size__product_size=obj)
         return StockSerializer(sizes, many=True).data
