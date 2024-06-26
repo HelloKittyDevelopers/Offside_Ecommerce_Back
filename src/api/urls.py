@@ -22,5 +22,6 @@ urlpatterns = [
     path("", include(router.urls)),
     path('docs/', include_docs_urls(title="Home API")),
     path('products/<int:pk>/', ProductDetailView.as_view(), name='product-detail'),
-    path('type/<str:type>/', ProductListingView.as_view(), name='product-listing')
+    path('type/<str:type>/', ProductListingView.as_view(), name='product-listing'),
+    path('products/by_type/<str:type>/', ProductListingByTypeView.as_view(), name='products-by-type'),
 ]

@@ -10,6 +10,8 @@ from api.db_queries import *
 from django.shortcuts import get_object_or_404
 from rest_framework.response import Response
 from django.db.models import Avg, Count
+import logging
+
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     
@@ -63,6 +65,36 @@ class ProductListingView(generics.ListAPIView):
     serializer_class = ProductSerializer
     permission_classes = [AllowAny]
 
+class ProductListingByTypeView(generics.ListAPIView):
+    serializer_class = ProductSerializer
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        logger = logging.getLogger(__name__)
+        type_name = self.kwargs.get('type')
+        if not type_name:
+            raise ValueError("Type parameter is missing")
+        
+        logger.info(f"Fetching products of type: {type_name}")
+        print(f"Fetching products of type: {type_name}")  # Esto es para depuración
+        
+        products = get_products_by_type(type_name)
+        
+        logger.info(f"Products found: {products}")
+        print(f"Products found: {products}")  # Esto es para depuración
+        
+        return products
+
+    def list(self, request, *args, **kwargs):
+        try:
+            queryset = self.get_queryset()
+            serializer = self.get_serializer(queryset, many=True)
+            return Response(serializer.data)
+        except ValueError as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as e:
+            return Response({'error': 'An error occurred while retrieving products'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        
 class ProductListingView(generics.ListAPIView):
     serializer_class = ProductSerializer
     permission_classes = [AllowAny]
