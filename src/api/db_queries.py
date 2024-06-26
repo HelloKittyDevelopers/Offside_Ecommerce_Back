@@ -34,26 +34,15 @@ def get_product_images(product_id):
 
 
 def get_products_by_category(products, category_name):
-    # Get the category id for the given category name
+    # Get the Category object by category name
     category = Category.objects.filter(category=category_name).first()
     if not category:
         return Product.objects.none()
 
+    # Filter products by category_id using Django ORM
     category_id = category.id_category
+    filtered_products = products.filter(productcategory__category_product_id=category_id)
 
-    # Filter products by type id
-    product_ids = [product.id_product for product in products]
-    if not product_ids:
-        return Product.objects.none()
-
-    # Get products associated with the category id using raw SQL with parameters
-    query = """
-        SELECT p.*
-        FROM api_product AS p
-        JOIN api_productcategory AS pc ON p.id_product = pc.product_category_id
-        WHERE pc.category_product_id = %s AND p.id_product = % s
-    """
-    filtered_products = Product.objects.raw(query, [category_id, tuple(product_ids)])
     return filtered_products
 
 def get_products_by_type(type_name):
@@ -114,14 +103,14 @@ def get_products_by_category_by_filters(category_name, type_name, min_price, max
     products = get_products_by_type(type_name)
 
     if category_name is not None:
-        products = get_products_by_type(products, category_name)
+        products = get_products_by_category(products, category_name)
     
-    if(min_price is not None or max_price is not None):
+    if min_price is not None or max_price is not None:
         products = get_products_by_price(products, min_price, max_price)
     
-    if(size_name is not None):
+    if size_name is not None:
         products = get_products_by_size(products, size_name)
-    
+        
     return products
 
 # Universal Functions
