@@ -119,4 +119,4 @@ class TypeSerializer(serializers.ModelSerializer):
 class OrderUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderUser
-        fields = ['id_order', 'date_order', 'total_payment', 'address', 'user', 'order_state', 'taxes']
+        fields = ['id_order', 'date_order', 'shipping_price', 'total_payment', 'address', 'user', 'order_state', 'taxes']
