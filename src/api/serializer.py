@@ -7,13 +7,26 @@ from api.models import *
 
 # serializers.py
 
+from rest_framework import serializers
+from django.contrib.auth.models import User
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.serializers import ModelSerializer, SerializerMethodField
+
+# serializers.py
+
+from rest_framework import serializers
+from django.contrib.auth.models import User
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.serializers import ModelSerializer, SerializerMethodField
+from api.models import *
+
 class UserSerializer(ModelSerializer):
     name = serializers.SerializerMethodField(read_only=True)
     isAdmin = serializers.SerializerMethodField(read_only=True)
     
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'name', 'isAdmin']
+        fields = ['id', 'first_name', 'last_name', 'username', 'email', 'isAdmin']
     
     def get_isAdmin(self, obj):
         return obj.is_staff
@@ -29,12 +42,26 @@ class UserSerializerWithToken(UserSerializer):
     
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'name', 'isAdmin', 'token']
+        fields = ['id', 'first_name', 'last_name', 'username', 'email', 'isAdmin', 'token']
     
     def get_token(self, obj):
         token = RefreshToken.for_user(obj)
         return str(token.access_token)
-    
+
+class UserRegisterSerializer(serializers.ModelSerializer):
+    # Define custom error messages
+    email = serializers.EmailField(error_messages={'unique': 'Email already registered.'})
+    username = serializers.CharField(error_messages={'unique': 'Username already exists.'})
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email', 'username', 'password']
+        extra_kwargs = {'password': {'write_only': True}}
+
+    def create(self, validated_data):
+        user = User.objects.create_user(**validated_data)
+        return user
+
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -111,3 +138,4 @@ class OrderUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderUser
         fields = ['id_order', 'date_order', 'total_payment', 'address', 'user', 'order_state', 'taxes']
+

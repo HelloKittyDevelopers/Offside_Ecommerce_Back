@@ -18,9 +18,10 @@ router.register(r'types', TypeView, 'types')
 router.register(r'orders', OrderUserView, 'orders')
 router.register(r'reviews', ReviewView, 'reviews')
 
+
 urlpatterns = [
     path("", include(router.urls)),
     path('docs/', include_docs_urls(title="Home API")),
     path('products/<int:pk>/', ProductDetailView.as_view(), name='product-detail'),
-    path('type/<str:type>/', ProductListingView.as_view(), name='product-listing')
+    path('type/<str:type>/', ProductListingView.as_view(), name='product-listing'),
 ]

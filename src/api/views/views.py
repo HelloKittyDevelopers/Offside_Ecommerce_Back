@@ -23,43 +23,61 @@ from rest_framework.views import APIView
 from django.contrib.auth.hashers import make_password
 from rest_framework import status
 
+
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
-    
     def validate(self, attrs):
         data = super().validate(attrs)
-
+        
         serializer = UserSerializerWithToken(self.user).data
-
         for k, v in serializer.items():
             data[k] = v
-
+        
         return data    
 
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
+    def post(self, request, *args, **kwargs):
+        username = request.data.get('username')
+        password = request.data.get('password')
+
+        try:
+            user = User.objects.get(username=username)
+            if user.check_password(password):
+                response = super().post(request, *args, **kwargs)
+                response.data['message'] = 'Logged in successfully'
+                return response
+            else:
+                return Response({'message': 'Invalid username or password'}, status=status.HTTP_400_BAD_REQUEST)
+        except User.DoesNotExist:
+            return Response({'message': 'Invalid username or password'}, status=status.HTTP_400_BAD_REQUEST)
 
 class RegisterUserView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        data = request.data
+        serializer = UserRegisterSerializer(data=request.data)
+        
+        if serializer.is_valid():
+            # Check if user or email already exists
+            username = serializer.validated_data['username']
+            email = serializer.validated_data['email']
+            if User.objects.filter(username=username).exists():
+                return Response({'error': 'Username already exists'}, status=status.HTTP_400_BAD_REQUEST)
+            if User.objects.filter(email=email).exists():
+                return Response({'error': 'Email already registered'}, status=status.HTTP_400_BAD_REQUEST)
 
-        try:
-            user = User.objects.create(
-                first_name = data['first_name'],
-                last_name = data['last_name'],
-                username=data['username'],
-                email=data['email'],
-                password=make_password(data['password'])
-            )
-        except: 
-            message = {'detail' : 'El usuario con este email ya existe'}
-            return Response(message, status=status.HTTP_400_BAD_REQUEST)
+            # If user and email are unique, save the user
+            user = serializer.save()
 
-        serializer = UserSerializerWithToken(user, many=False)
-        return Response(serializer.data)
-
+            # Return success message along with user data
+            return Response({
+                'success': 'User registered successfully',
+                'user': serializer.data,
+            }, status=status.HTTP_201_CREATED)
+        else:
+            return Response({'error': 'Email or  username already registered'}, status=status.HTTP_400_BAD_REQUEST)
+        
 
 class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]
@@ -68,7 +86,7 @@ class UserProfileView(APIView):
         user = request.user
         serializer = UserSerializer(user)
         return Response(serializer.data)
-    
+
 class getUsers(APIView):
     permission_classes = [IsAdminUser]
 
@@ -81,6 +99,7 @@ class ProductView(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
     queryset = Product.objects.all()
     permission_classes = [AllowAny]
+    
 class ProductDetailView(generics.RetrieveAPIView):
     serializer_class = ProductSerializer
     permission_classes = [AllowAny]
