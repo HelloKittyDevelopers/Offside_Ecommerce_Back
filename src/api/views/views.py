@@ -22,6 +22,9 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from django.contrib.auth.hashers import make_password
 from rest_framework import status
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework import status
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     
@@ -81,6 +84,26 @@ class ProductView(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
     queryset = Product.objects.all()
     permission_classes = [AllowAny]
+
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+    def perform_create(self, serializer):
+        product = serializer.save()
+        images = self.request.FILES.getlist('images')
+        for image in images:
+            Image.objects.create(image=image, product_image=product)
+
+    @action(detail=True, methods=['get'])
+    def categories(self, request, pk=None):
+        product_categories = ProductCategory.objects.filter(product_category=pk)
+        serializer = ProductCategorySerializer(product_categories, many=True)
+        return Response(serializer.data)
+
 class ProductDetailView(generics.RetrieveAPIView):
     serializer_class = ProductSerializer
     permission_classes = [AllowAny]
