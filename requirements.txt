@@ -1,5 +1,6 @@
 virtualenv
 django
+gunicorn
 django-cors-headers
 djangorestframework
 djangorestframework-simplejwt
@@ -17,3 +18,5 @@ setuptools
 pytest
 pytest-django
 Pillow
+cement==2.8.2
+
