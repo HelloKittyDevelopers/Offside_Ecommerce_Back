@@ -69,10 +69,12 @@ class ProductSerializer(serializers.ModelSerializer):
     images = serializers.SerializerMethodField()
     average_rating = serializers.FloatField(read_only=True)
     review_count = serializers.IntegerField(read_only=True)
+    type_category = serializers.PrimaryKeyRelatedField(queryset=Type.objects.all())
+    categories = serializers.PrimaryKeyRelatedField(many=True, queryset=Category.objects.all(), write_only=True)
 
     class Meta:
         model = Product
-        fields = ['id_product', 'product_name', 'price', 'description', 'type_category', 'reviews', 'sizes', 'images', 'average_rating', 'review_count']
+        fields = ['id_product', 'product_name', 'price', 'description', 'type_category', 'categories', 'reviews', 'sizes', 'images', 'average_rating', 'review_count']
 
     def get_sizes(self, obj):
         sizes = Stock.objects.filter(product_size__product_size=obj)
@@ -81,6 +83,13 @@ class ProductSerializer(serializers.ModelSerializer):
     def get_images(self, obj):
         images = Image.objects.filter(product_image=obj)
         return ImageSerializer(images, many=True).data
+
+    def create(self, validated_data):
+        categories = validated_data.pop('categories', [])
+        product = Product.objects.create(**validated_data)
+        for category in categories:
+            ProductCategory.objects.create(category_product=category, product_category=product)
+        return product
 
 class ProductCategorySerializer(serializers.ModelSerializer):
     class Meta:
