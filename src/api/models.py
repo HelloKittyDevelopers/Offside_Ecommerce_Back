@@ -109,7 +109,6 @@ class OrderUser(models.Model):
     date_order = models.DateField(auto_now_add=True, null=False)
     shipping_price = models.FloatField(null=False)
     total_payment = models.FloatField(null=False)
-    address = models.CharField(max_length=80, null=False)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     order_state = models.ForeignKey(OrderState, on_delete=models.SET_NULL, null=True)
     taxes = models.FloatField(null=False)
