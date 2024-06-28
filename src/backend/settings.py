@@ -179,7 +179,7 @@ CORS_ALLOW_CREDENTIALS = True
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',  # Ejemplo: React en localhost
-    'http://offfront.us-east-2.elasticbeanstalk.com'
+    
 ]
 
 # Rest Framework
