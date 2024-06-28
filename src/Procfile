@@ -1,0 +1,1 @@
+web: gunicorn EncoraEcommerce.wsgi --log-file -
