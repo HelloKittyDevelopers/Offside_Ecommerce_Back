@@ -4,6 +4,7 @@ from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 from api.models import *
+from django.db.models import Avg, Count
 
 # serializers.py
 
@@ -67,8 +68,8 @@ class ProductSerializer(serializers.ModelSerializer):
     reviews = ReviewSerializer(many=True, read_only=True)
     sizes = serializers.SerializerMethodField()
     images = serializers.SerializerMethodField()
-    average_rating = serializers.FloatField(read_only=True)
-    review_count = serializers.IntegerField(read_only=True)
+    average_rating = serializers.SerializerMethodField()
+    review_count = serializers.SerializerMethodField()
     type_category = serializers.PrimaryKeyRelatedField(queryset=Type.objects.all())
     categories = serializers.PrimaryKeyRelatedField(many=True, queryset=Category.objects.all(), write_only=True)
 
@@ -83,6 +84,14 @@ class ProductSerializer(serializers.ModelSerializer):
     def get_images(self, obj):
         images = Image.objects.filter(product_image=obj)
         return ImageSerializer(images, many=True).data
+
+    def get_average_rating(self, obj):
+        reviews = Review.objects.filter(product=obj)
+        return reviews.aggregate(average_rating=Avg('rating'))['average_rating'] or 0
+
+    def get_review_count(self, obj):
+        reviews = Review.objects.filter(product=obj)
+        return reviews.aggregate(count=Count('id_review'))['count'] or 0
 
     def create(self, validated_data):
         categories = validated_data.pop('categories', [])
