@@ -1,0 +1,71 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="E0DEC7D6-53C4-F2F9-8020-4DA490AE1E3D" name="CATEGORY">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 20:34:45 UTC</createdTime>
+<generatorID>856E0AF6-B6B3-99CD-4A83-2DE6706EF42A</generatorID>
+<ownerDesignName>Identity Relational Model</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="Id_category2" id="638C0FDC-63A5-4DC6-9A4A-F4F0B678DD68">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 20:34:45 UTC</createdTime>
+<generatorID>0780C97A-4634-15CB-4C4A-61D36AD13E54</generatorID>
+<ownerDesignName>Identity Relational Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="category2" id="C1AB108C-EE17-4445-4517-22278916472F">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 20:34:45 UTC</createdTime>
+<generatorID>D71D6015-4721-677A-98A1-6B06CE5CA07D</generatorID>
+<ownerDesignName>Identity Relational Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>80 CHAR</dataTypeSize>
+<ownDataTypeParameters>80 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="CATEGORYv1_ID" id="E06A70EC-695D-99C5-DA2D-0A9CEC03062C">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 20:34:45 UTC</createdTime>
+<ownerDesignName>Identity Relational Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT019</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementColumn>true</autoIncrementColumn>
+<identityColumn>true</identityColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<isSurrogateColumn>true</isSurrogateColumn>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="9DCF549D-7FBC-FA60-4908-7BED9F4CB5A7" name="CATEGORYv1_PK">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 20:34:45 UTC</createdTime>
+<ownerDesignName>Identity Relational Model</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<indexColumnUsage>
+<colUsage columnID="E06A70EC-695D-99C5-DA2D-0A9CEC03062C"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="598298CD-1831-5C61-FC45-C234479F586B" name="CATEGORY_Id_category2_UN">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 21:08:33 UTC</createdTime>
+<generatorID>F52136EA-ABE5-3F59-A7B1-0B39E563FECB</generatorID>
+<ownerDesignName>Identity Relational Model</ownerDesignName>
+<indexState>Unique Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="638C0FDC-63A5-4DC6-9A4A-F4F0B678DD68"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

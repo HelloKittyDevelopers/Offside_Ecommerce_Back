@@ -1,0 +1,88 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="2BA72E99-AB75-6A5B-33C2-693788A5EF92" name="STOCK">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 04:03:07 UTC</createdTime>
+<generatorID>B88357D9-2359-8E19-8C88-5FDEDA6533AF</generatorID>
+<ownerDesignName>Identity Relational Model</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="Id_stock" id="BDAE59B8-DD14-31CF-FFE9-11B279E77D2A">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 04:03:07 UTC</createdTime>
+<generatorID>48327418-9978-6D91-F7D3-78A0764A1311</generatorID>
+<ownerDesignName>Identity Relational Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="quantity" id="1381D45D-20AE-A3DF-7556-F3FDABB8E044">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 04:03:07 UTC</createdTime>
+<generatorID>E461B611-C658-0266-6E62-718101D8D282</generatorID>
+<ownerDesignName>Identity Relational Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>80 CHAR</dataTypeSize>
+<ownDataTypeParameters>80 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="PRODUCT-SIZE_PRODUCT_Id_product" id="0586D99D-ECB3-BAD8-988D-A2262887BE40">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 04:48:01 UTC</createdTime>
+<ownerDesignName>Identity Relational Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="E6133657-388E-3EE3-BBEF-4B25692DDC96" referredColumn="64B94E58-08D4-460D-B5D9-35670E7F5D67"/>
+</associations>
+</Column>
+<Column name="PRODUCT-SIZE_SIZE_Id_Size" id="C2734BD9-315D-3459-1949-7AC2F0168987">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 04:48:01 UTC</createdTime>
+<ownerDesignName>Identity Relational Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="E6133657-388E-3EE3-BBEF-4B25692DDC96" referredColumn="1DCC93F3-19D3-A8B0-F864-751E87A8D827"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="9DE537A1-0B96-7AC3-195A-7AC4431A2686" name="STOCK_PK">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 04:03:07 UTC</createdTime>
+<generatorID>D1290A2D-3DE4-CE0D-A101-5649AE9BD784</generatorID>
+<ownerDesignName>Identity Relational Model</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="BDAE59B8-DD14-31CF-FFE9-11B279E77D2A"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="CAEB7931-6C72-0D86-BA00-04DA8F53A803" name="STOCK_PRODUCT-SIZE_FK">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 04:48:01 UTC</createdTime>
+<ownerDesignName>Identity Relational Model</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="0586D99D-ECB3-BAD8-988D-A2262887BE40"/>
+<colUsage columnID="C2734BD9-315D-3459-1949-7AC2F0168987"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

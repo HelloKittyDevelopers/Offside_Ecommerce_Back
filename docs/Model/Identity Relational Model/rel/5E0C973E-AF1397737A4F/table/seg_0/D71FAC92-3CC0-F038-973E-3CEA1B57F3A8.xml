@@ -1,0 +1,74 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="D71FAC92-3CC0-F038-973E-3CEA1B57F3A8" name="IMAGE">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 20:34:45 UTC</createdTime>
+<generatorID>0C2D0269-D27E-CE2F-CEA5-38D0E0737093</generatorID>
+<ownerDesignName>Identity Relational Model</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="Id_image" id="73DC99EC-1539-059F-5AF3-514FEB8E25C2">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 20:34:45 UTC</createdTime>
+<generatorID>FC31F676-AE68-DEF5-348B-EB3A6C102CAA</generatorID>
+<ownerDesignName>Identity Relational Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="image" id="32E2898D-E321-F116-FD55-5CC359687D71">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 20:34:45 UTC</createdTime>
+<generatorID>E2A18891-3EFB-ABE6-91A8-9F5BC5BB922F</generatorID>
+<ownerDesignName>Identity Relational Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT029</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="PRODUCT_Id_product" id="09142DE7-C377-E53F-8136-28F121E116E4">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 20:34:45 UTC</createdTime>
+<generatorID>61238E90-B918-B517-1BEC-83023A2A812F</generatorID>
+<ownerDesignName>Identity Relational Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<previousColumn>false</previousColumn>
+<autoIncrementCycle>false</autoIncrementCycle>
+<associations>
+<colAssociation fkAssociation="705830EF-1029-ABC1-8243-672E7B028FF9" referredColumn="8C1FEB4E-D150-A488-BD5F-C22FD7840BBE"/>
+</associations>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="1745D3C0-03E3-8F06-5604-7606EB51870E" name="IMAGE_PK">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 20:34:45 UTC</createdTime>
+<generatorID>877E58C8-C5E5-C665-5C8A-D7A983796663</generatorID>
+<ownerDesignName>Identity Relational Model</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="73DC99EC-1539-059F-5AF3-514FEB8E25C2"/>
+</indexColumnUsage>
+</ind_PK_UK>
+<ind_PK_UK id="D2FEFBCB-E48D-38FD-8D54-63C0F6E69A59" name="IMAGE_PRODUCT_FK">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 20:34:45 UTC</createdTime>
+<generatorID>07F8B778-96ED-6DA2-0110-05D9F85C0C5C</generatorID>
+<ownerDesignName>Identity Relational Model</ownerDesignName>
+<indexState>Foreign Key</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="09142DE7-C377-E53F-8136-28F121E116E4"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

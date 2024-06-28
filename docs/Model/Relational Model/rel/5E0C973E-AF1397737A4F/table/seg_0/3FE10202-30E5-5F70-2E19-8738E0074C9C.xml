@@ -1,0 +1,98 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" directorySegmentName="seg_0" id="3FE10202-30E5-5F70-2E19-8738E0074C9C" name="USER">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 04:03:07 UTC</createdTime>
+<generatorID>1D7C2D43-D1AD-4982-8240-6E13552AA8B0</generatorID>
+<ownerDesignName>Relational Model</ownerDesignName>
+<allowColumnReorder>false</allowColumnReorder>
+<existDependencyGenerateInDDl>true</existDependencyGenerateInDDl>
+<parsed>true</parsed>
+<columns itemClass="oracle.dbtools.crest.model.design.relational.Column">
+<Column name="Id_user" id="D895D521-6472-880C-FA0A-6564BA97E8AA">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 04:03:07 UTC</createdTime>
+<generatorID>E9532792-F647-BA09-A657-D263606AA334</generatorID>
+<ownerDesignName>Relational Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="username" id="B7861EA6-1958-6D48-E7A0-56104B544CA0">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 04:03:07 UTC</createdTime>
+<generatorID>796A27FA-502B-C5DD-4B6D-09F8ED2561BA</generatorID>
+<ownerDesignName>Relational Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>80 CHAR</dataTypeSize>
+<ownDataTypeParameters>80 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="encrypted_password" id="4942D26A-661F-F627-DABE-ECD8E24A5395">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 04:03:07 UTC</createdTime>
+<generatorID>D4FED213-64BD-5777-2CDA-4D0E8C898648</generatorID>
+<ownerDesignName>Relational Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>80 BYTE</dataTypeSize>
+<ownDataTypeParameters>80 BYTE,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="name" id="761E6971-DC05-3C8E-424E-270360477882">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 04:03:07 UTC</createdTime>
+<generatorID>A89457F1-8A90-E18E-AC44-E6CF35003E84</generatorID>
+<ownerDesignName>Relational Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>80 CHAR</dataTypeSize>
+<ownDataTypeParameters>80 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="email" id="48AB12E0-87CF-8884-2D90-51716BECC833">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 04:03:07 UTC</createdTime>
+<generatorID>35365E19-0531-FD05-51DC-36085AAFA734</generatorID>
+<ownerDesignName>Relational Model</ownerDesignName>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>80 CHAR</dataTypeSize>
+<ownDataTypeParameters>80 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+<Column name="phone_number" id="C5DCBC5C-5A19-082C-9742-E9E47AF30EC8">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 04:03:07 UTC</createdTime>
+<generatorID>38B4D13A-645F-0FEB-FC3D-DD7601EB710E</generatorID>
+<ownerDesignName>Relational Model</ownerDesignName>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT024</logicalDatatype>
+<dataTypeSize>80 CHAR</dataTypeSize>
+<ownDataTypeParameters>80 CHAR,,</ownDataTypeParameters>
+<autoIncrementCycle>false</autoIncrementCycle>
+</Column>
+</columns>
+<indexes itemClass="oracle.dbtools.crest.model.design.relational.Index">
+<ind_PK_UK id="EC6C572D-3604-0B4B-3BE4-468D8C8949DC" name="USER_PK">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 04:03:07 UTC</createdTime>
+<generatorID>98E86DF4-DA58-A407-7C7D-C5479AA124DA</generatorID>
+<ownerDesignName>Relational Model</ownerDesignName>
+<pk>true</pk>
+<indexState>Primary Constraint</indexState>
+<isSurrogateKey>false</isSurrogateKey>
+<indexColumnUsage>
+<colUsage columnID="D895D521-6472-880C-FA0A-6564BA97E8AA"/>
+</indexColumnUsage>
+</ind_PK_UK>
+</indexes>
+</Table>

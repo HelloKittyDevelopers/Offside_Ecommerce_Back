@@ -1,0 +1,108 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Entity class="oracle.dbtools.crest.model.design.logical.Entity" directorySegmentName="seg_0" id="82E69957-C8B5-A59A-A066-00B2C1CCC90D" name="PRODUCT">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 01:48:03 UTC</createdTime>
+<ownerDesignName>Relational Model</ownerDesignName>
+<engineerTo>
+<item key="5E0C973E-9EBC-ADF0-6EFC-AF1397737A4F" value="true"/>
+</engineerTo>
+<adequatelyNormalized>NO</adequatelyNormalized>
+<expectedVolumes>0</expectedVolumes>
+<fwdEngineeringStrategyName>Single Table</fwdEngineeringStrategyName>
+<growthPercent>0</growthPercent>
+<growthType>Year</growthType>
+<maxVolumes>9999999</maxVolumes>
+<minVolumes>0</minVolumes>
+<normalForm>Third</normalForm>
+<attributes itemClass="oracle.dbtools.crest.model.design.logical.Attribute">
+<Attribute name="Id_product" id="95DA30C5-1273-43E8-1EC3-C01FE51F2891">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 01:51:21 UTC</createdTime>
+<ownerDesignName>Relational Model</ownerDesignName>
+<engineerTo>
+<item key="5E0C973E-9EBC-ADF0-6EFC-AF1397737A4F" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="name" id="3BEBF005-132B-A4C4-AF8B-F247D8AFC466">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 01:51:28 UTC</createdTime>
+<ownerDesignName>Relational Model</ownerDesignName>
+<engineerTo>
+<item key="5E0C973E-9EBC-ADF0-6EFC-AF1397737A4F" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>A3A3C77D-0366-9768-FF89-1C25E56881C8</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="price" id="25E8C011-F66E-731C-6237-1A6DF2386C0B">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 01:51:35 UTC</createdTime>
+<ownerDesignName>Relational Model</ownerDesignName>
+<engineerTo>
+<item key="5E0C973E-9EBC-ADF0-6EFC-AF1397737A4F" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT020</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="description" id="70FC1AAF-7081-F423-8037-EE82E17494EC">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 01:52:27 UTC</createdTime>
+<ownerDesignName>Relational Model</ownerDesignName>
+<engineerTo>
+<item key="5E0C973E-9EBC-ADF0-6EFC-AF1397737A4F" value="true"/>
+</engineerTo>
+<nullsAllowed>true</nullsAllowed>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>A3A3C77D-0366-9768-FF89-1C25E56881C8</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="stock" id="21FA721A-E1CA-433B-2B03-F4641632BDC6">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 01:53:10 UTC</createdTime>
+<ownerDesignName>Relational Model</ownerDesignName>
+<engineerTo>
+<item key="5E0C973E-9EBC-ADF0-6EFC-AF1397737A4F" value="true"/>
+</engineerTo>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+<Attribute name="Id_stock" id="5B4AFBD5-149C-31C5-5D49-A0F9DE55F877">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 03:53:12 UTC</createdTime>
+<generatorID>AF00029D-2FF8-8ABB-8E71-89EBFE21B948</generatorID>
+<ownerDesignName>Relational Model</ownerDesignName>
+<engineerTo>
+<item key="5E0C973E-9EBC-ADF0-6EFC-AF1397737A4F" value="true"/>
+</engineerTo>
+<referedAttribute>48327418-9978-6D91-F7D3-78A0764A1311</referedAttribute>
+<useDomainConstraints>false</useDomainConstraints>
+<use>1</use>
+<logicalDatatype>LOGDT011</logicalDatatype>
+<ownDataTypeParameters>,,</ownDataTypeParameters>
+</Attribute>
+</attributes>
+<identifiers itemClass="oracle.dbtools.crest.model.design.logical.CandidateKey">
+<identifier id="1A765DE6-6FAC-3748-2FC8-89D24286D9AB" name="PRODUCT PK">
+<createdBy>raul-</createdBy>
+<createdTime>2024-06-12 01:51:26 UTC</createdTime>
+<ownerDesignName>Relational Model</ownerDesignName>
+<engineerTo>
+<item key="5E0C973E-9EBC-ADF0-6EFC-AF1397737A4F" value="true"/>
+</engineerTo>
+<pk>true</pk>
+<usedAttributes>
+<attributeRef>95DA30C5-1273-43E8-1EC3-C01FE51F2891</attributeRef>
+</usedAttributes>
+</identifier>
+</identifiers>
+</Entity>
