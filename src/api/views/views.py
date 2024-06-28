@@ -22,7 +22,7 @@ from django.shortcuts import render
 from rest_framework.views import APIView
 from django.contrib.auth.hashers import make_password
 from rest_framework import status
-
+from rest_framework.decorators import api_view, permission_classes
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     
     def validate(self, attrs):
@@ -188,3 +188,54 @@ class ReviewView(viewsets.ModelViewSet):
     serializer_class = ReviewSerializer
     queryset = Review.objects.all()
     permission_classes = [AllowAny]
+
+class CreateReviewView(APIView):
+    def get_permissions(self):
+        if self.request.method == 'POST':
+            self.permission_classes = [IsAuthenticated]
+        else:
+            self.permission_classes = [AllowAny]
+        return super(CreateReviewView, self).get_permissions()
+
+    def get(self, request, pk):
+        product = get_object_or_404(Product, pk=pk)
+        reviews = Review.objects.filter(product=product)
+        
+        serializer = ReviewSerializer(reviews, many=True)
+        review_count = reviews.count()
+        
+        response_data = {
+            'reviews': serializer.data,
+            'review_count': review_count
+        }
+        
+        return Response(response_data, status=status.HTTP_200_OK)
+
+    def post(self, request, pk):
+        user = request.user
+        product = get_object_or_404(Product, pk=pk)
+        data = request.data
+        
+        # Check if the user has already reviewed this product
+        already_exists = product.reviews.filter(user=user).exists()
+        if already_exists:
+            return Response({'detail': 'Product already reviewed'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Check if the rating is provided
+        elif 'rating' not in data:
+            return Response({'detail': 'Please provide a rating'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Check if the comment is provided
+        elif 'comment' not in data:
+            return Response({'detail': 'Please provide a comment'}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # Create review
+        else:
+            review = Review.objects.create(
+                user=user,
+                product=product,
+                rating=data['rating'],
+                comment=data['comment']
+            )
+        serializer = ReviewSerializer(review, many=False)
+        return Response(serializer.data)
