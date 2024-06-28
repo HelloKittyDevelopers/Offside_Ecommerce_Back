@@ -157,12 +157,39 @@ class ProductListingView(generics.ListAPIView):
             products = get_products_by_category_by_filters(category_name, type_name, min_price, max_price, size_name)
 
         return products
-    
+
     def list(self, request, *args, **kwargs):
         try:
             queryset = self.get_queryset()
             serializer = self.get_serializer(queryset, many=True)
-            return Response(serializer.data)
+            data = serializer.data
+
+            # Add average_rating and review_count to each product
+            for product_data in data:
+                product_id = product_data['id_product']
+                reviews = Review.objects.filter(product_id=product_id)
+                review_average = reviews.aggregate(average_rating=Avg('rating'))['average_rating'] or 0
+                review_count = reviews.aggregate(count=Count('id_review'))['count'] or 0
+
+                product_data['average_rating'] = review_average
+                product_data['review_count'] = review_count
+
+            # Fetch all categories and sizes
+            categories = Category.objects.all()
+            sizes = Size.objects.all()
+
+            # Serialize categories and sizes
+            category_serializer = CategorySerializer(categories, many=True)
+            size_serializer = SizeSerializer(sizes, many=True)
+
+            # Append categories and sizes to the response data
+            response_data = {
+                'products': data,
+                'categories': category_serializer.data,
+                'sizes': size_serializer.data
+            }
+
+            return Response(response_data)
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 

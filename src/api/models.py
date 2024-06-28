@@ -109,13 +109,14 @@ class OrderUser(models.Model):
     date_order = models.DateField(auto_now_add=True, null=False)
     shipping_price = models.FloatField(null=False)
     total_payment = models.FloatField(null=False)
-    address = models.CharField(max_length=80, null=False)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     order_state = models.ForeignKey(OrderState, on_delete=models.SET_NULL, null=True)
     taxes = models.FloatField(null=False)
 
     def __str__(self):
         return f"Order #{self.id_order} by {self.user}"
+
+
 
 class Review(models.Model):
     id_review = models.AutoField(primary_key=True)
@@ -132,4 +133,20 @@ class Review(models.Model):
     class Meta:
         constraints = [
             models.UniqueConstraint(fields=['product', 'user'], name='unique_review')
+        ]
+
+class Shipping(models.Model):
+    id_shipping = models.AutoField(primary_key=True)
+    order = models.OneToOneField(OrderUser, on_delete=models.CASCADE)
+    address = models.CharField(max_length=255, null=False)
+    city = models.CharField(max_length=80, null=False)
+    postal_code = models.CharField(max_length=20, null=False)
+    country = models.CharField(max_length=80, null=False)
+
+    def __str__(self):
+        return f"Shipping for Order #{self.order.id_order}"
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(fields=['order'], name='unique_shipping_order')
         ]
