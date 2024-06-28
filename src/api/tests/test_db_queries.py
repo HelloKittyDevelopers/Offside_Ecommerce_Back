@@ -6,23 +6,23 @@ from api.db_queries import (
     get_products_by_category_by_filters, get_all_categories, get_all_types, get_all_sizes, get_order_by_user_id, 
     get_all_order_products, get_product_reviews, get_product_review_average
 )
-from api.models import Rol, UserInfo, Product, Category, ProductCategory, Type, Size, ProductSize, Image, OrderUser, OrderItem, Review
+from api.models import  User ,Product, Category, ProductCategory, Type, Size, ProductSize, Image, OrderUser, OrderItem, Review
 
 @pytest.mark.django_db
 class ProductTestCase(TestCase):
 
     def setUp(self):
         # Create a test role
-        self.rol = Rol.objects.create(rol='Test Role')
+        
 
         #Create user
-        self.user_info = UserInfo.objects.create(
+        self.user_info = User.objects.create(
             name='John Doe',
             encrypted_password='hashed_password', 
             user_name='johndoe',
             email='johndoe@example.com',
             phone_number='123-456-7890',
-            user_rol=self.rol 
+            
         )
 
         # Create test categories

@@ -1,66 +1,234 @@
-# api/views.py
-from django.shortcuts import render
+from api.models import *
+from api.serializer import *
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
+from rest_framework import viewsets
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework.response import Response
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import generics
-from api.models import UserInfo, Rol, 
+from api.models import *
 from api.serializer import *
 from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from rest_framework import viewsets
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from api.db_queries import *
+from django.shortcuts import get_object_or_404
+from rest_framework.response import Response
+from django.db.models import Avg, Count
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from django.shortcuts import render
+from rest_framework.views import APIView
+from django.contrib.auth.hashers import make_password
+from rest_framework import status
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework import status
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    
+    def validate(self, attrs):
+        data = super().validate(attrs)
+
+        serializer = UserSerializerWithToken(self.user).data
+
+        for k, v in serializer.items():
+            data[k] = v
+
+        return data    
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
 
 
-# Create views
-class CreateUserView(generics.CreateAPIView):
-    queryset = UserInfo.objects.all()
-    serializer_class = UserInfoSerializer
+class RegisterUserView(APIView):
     permission_classes = [AllowAny]
 
-class CreateRol(generics.CreateAPIView):
-    queryset = Rol.objects.all()
-    serializer_class = RolSerializer
-    permission_classes = [AllowAny]
+    def post(self, request):
+        data = request.data
+
+        try:
+            user = User.objects.create(
+                first_name = data['first_name'],
+                last_name = data['last_name'],
+                username=data['username'],
+                email=data['email'],
+                password=make_password(data['password'])
+            )
+        except: 
+            message = {'detail' : 'El usuario con este email ya existe'}
+            return Response(message, status=status.HTTP_400_BAD_REQUEST)
+
+        serializer = UserSerializerWithToken(user, many=False)
+        return Response(serializer.data)
+
+
+class UserProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
+    
+class getUsers(APIView):
+    permission_classes = [IsAdminUser]
+
+    def get(self, request):
+        users = User.objects.all()
+        serializer = UserSerializer(users, many=True)
+        return Response(serializer.data)
 
 class ProductView(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
     queryset = Product.objects.all()
     permission_classes = [AllowAny]
 
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+    def perform_create(self, serializer):
+        product = serializer.save()
+        images = self.request.FILES.getlist('images')
+        for image in images:
+            Image.objects.create(image=image, product_image=product)
+
+    @action(detail=True, methods=['get'])
+    def categories(self, request, pk=None):
+        product_categories = ProductCategory.objects.filter(product_category=pk)
+        serializer = ProductCategorySerializer(product_categories, many=True)
+        return Response(serializer.data)
+
+class ProductDetailView(generics.RetrieveAPIView):
+    serializer_class = ProductSerializer
+    permission_classes = [AllowAny]
+
+    def get_object(self):
+        product_id = self.kwargs['pk']
+        return get_object_or_404(Product, pk=product_id)
+
+    def get(self, request, *args, **kwargs):
+        product = self.get_object()
+        serializer = self.get_serializer(product)
+
+        reviews = Review.objects.filter(product_id=product.id_product)
+        review_average = reviews.aggregate(average_rating=Avg('rating'))['average_rating'] or 0
+        review_count = reviews.aggregate(count=Count('id_review'))['count'] or 0
+
+        images = Image.objects.filter(product_image=product)
+        images_serializer = ImageSerializer(images, many=True)
+
+        data = serializer.data
+        data['average_rating'] = review_average
+        data['review_count'] = review_count
+        data['images'] = images_serializer.data
+
+        return Response(data)
+
+class ProductListingView(generics.ListAPIView):
+    serializer_class = ProductSerializer
+    permission_classes = [AllowAny]
+
+class ProductListingView(generics.ListAPIView):
+    serializer_class = ProductSerializer
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        type_name = self.kwargs['type']
+        category_name = self.request.query_params.get('category', None)
+        min_price = self.request.query_params.get('min_price', None)
+        max_price = self.request.query_params.get('max_price', None)
+        size_name = self.request.query_params.get('size', None)
+
+        if all(param is None or param == '' for param in [category_name, min_price, max_price, size_name]):
+            # Handle case where all params are None or empty
+            products = get_products_by_type(type_name)
+        else:
+            if min_price is not None:
+                min_price = float(min_price)
+            if max_price is not None:
+                max_price = float(max_price)
+
+            products = get_products_by_category_by_filters(category_name, type_name, min_price, max_price, size_name)
+
+        return products
+
+    def list(self, request, *args, **kwargs):
+        try:
+            queryset = self.get_queryset()
+            serializer = self.get_serializer(queryset, many=True)
+            data = serializer.data
+
+            # Add average_rating and review_count to each product
+            for product_data in data:
+                product_id = product_data['id_product']
+                reviews = Review.objects.filter(product_id=product_id)
+                review_average = reviews.aggregate(average_rating=Avg('rating'))['average_rating'] or 0
+                review_count = reviews.aggregate(count=Count('id_review'))['count'] or 0
+
+                product_data['average_rating'] = review_average
+                product_data['review_count'] = review_count
+
+            # Fetch all categories and sizes
+            categories = Category.objects.all()
+            sizes = Size.objects.all()
+
+            # Serialize categories and sizes
+            category_serializer = CategorySerializer(categories, many=True)
+            size_serializer = SizeSerializer(sizes, many=True)
+
+            # Append categories and sizes to the response data
+            response_data = {
+                'products': data,
+                'categories': category_serializer.data,
+                'sizes': size_serializer.data
+            }
+
+            return Response(response_data)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
 class CategoryView(viewsets.ModelViewSet):
     serializer_class = CategorySerializer
     queryset = Category.objects.all()
     permission_classes = [AllowAny]
 
-# class ImageView(viewsets.ModelViewSet):
-#     serializer_class = ImageSerializer
-#     queryset = Image.objects.all()
-#     permission_classes = [AllowAny]
+class ImageView(viewsets.ModelViewSet):
+    serializer_class = ImageSerializer
+    queryset = Image.objects.all()
+    permission_classes = [AllowAny]
 
 class OrderStateView(viewsets.ModelViewSet):
     serializer_class = OrderStateSerializer
     queryset = OrderState.objects.all()
     permission_classes = [AllowAny]
 
-class UserInfoView(viewsets.ModelViewSet):
-    serializer_class = UserInfoSerializer
-    queryset = UserInfo.objects.all()
-    permission_classes = [AllowAny]
-
 class ProductCategoryView(viewsets.ModelViewSet):
-    serializer_class = ProductCategorySerializer
+    serializer_class = ProductCategorySerializer 
     queryset = ProductCategory.objects.all()
     permission_classes = [AllowAny]
+
 
 class OrderItemView(viewsets.ModelViewSet):
     serializer_class = OrderItemSerializer
     queryset = OrderItem.objects.all()
     permission_classes = [AllowAny]
 
+    def get_queryset(self):
+        order_id = self.request.query_params.get('order_id', None)
+        if order_id is not None:
+            return OrderItem.objects.filter(order_user__id_order=order_id)
+        return super().get_queryset()
+
+
 class ProductSizeView(viewsets.ModelViewSet):
     serializer_class = ProductSizeSerializer
     queryset = ProductSize.objects.all()
-    permission_classes = [AllowAny]
-
-class RolView(viewsets.ModelViewSet):
-    serializer_class = RolSerializer
-    queryset = Rol.objects.all()
     permission_classes = [AllowAny]
 
 class SizeView(viewsets.ModelViewSet):
