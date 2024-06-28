@@ -209,14 +209,22 @@ class OrderStateView(viewsets.ModelViewSet):
     permission_classes = [AllowAny]
 
 class ProductCategoryView(viewsets.ModelViewSet):
-    serializer_class = ProductCategorySerializer  # Asegúrate de que esto esté definido en tu archivo serializer.py
+    serializer_class = ProductCategorySerializer 
     queryset = ProductCategory.objects.all()
     permission_classes = [AllowAny]
+
 
 class OrderItemView(viewsets.ModelViewSet):
     serializer_class = OrderItemSerializer
     queryset = OrderItem.objects.all()
     permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        order_id = self.request.query_params.get('order_id', None)
+        if order_id is not None:
+            return OrderItem.objects.filter(order_user__id_order=order_id)
+        return super().get_queryset()
+
 
 class ProductSizeView(viewsets.ModelViewSet):
     serializer_class = ProductSizeSerializer
