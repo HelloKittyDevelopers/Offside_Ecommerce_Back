@@ -27,3 +27,8 @@
 - Finally use 'python manage.py makemigrations'
 - End it with 'python manage.py migrate'
 - Succesfully created database in postgres connected with project check postgres tables :D
+
+5. Tests (currently don't work due to changes)
+
+-After activating the venv go to 'EncoraEcommerce/src/api/tests'
+-Use command 'pytest'
