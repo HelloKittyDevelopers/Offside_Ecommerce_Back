@@ -4,8 +4,22 @@ from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 from api.models import *
+from django.db.models import Avg, Count
 
 # serializers.py
+
+from rest_framework import serializers
+from django.contrib.auth.models import User
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.serializers import ModelSerializer, SerializerMethodField
+
+# serializers.py
+
+from rest_framework import serializers
+from django.contrib.auth.models import User
+from rest_framework_simplejwt.tokens import RefreshToken
+from rest_framework.serializers import ModelSerializer, SerializerMethodField
+from api.models import *
 
 class UserSerializer(ModelSerializer):
     name = serializers.SerializerMethodField(read_only=True)
@@ -13,7 +27,7 @@ class UserSerializer(ModelSerializer):
     
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'name', 'isAdmin']
+        fields = ['id', 'first_name', 'last_name', 'username', 'email', 'isAdmin']
     
     def get_isAdmin(self, obj):
         return obj.is_staff
@@ -29,12 +43,26 @@ class UserSerializerWithToken(UserSerializer):
     
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'name', 'isAdmin', 'token']
+        fields = ['id', 'first_name', 'last_name', 'username', 'email', 'isAdmin', 'token']
     
     def get_token(self, obj):
         token = RefreshToken.for_user(obj)
         return str(token.access_token)
-    
+
+class UserRegisterSerializer(serializers.ModelSerializer):
+    # Define custom error messages
+    email = serializers.EmailField(error_messages={'unique': 'Email already registered.'})
+    username = serializers.CharField(error_messages={'unique': 'Username already exists.'})
+
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email', 'username', 'password']
+        extra_kwargs = {'password': {'write_only': True}}
+
+    def create(self, validated_data):
+        user = User.objects.create_user(**validated_data)
+        return user
+
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -67,8 +95,8 @@ class ProductSerializer(serializers.ModelSerializer):
     reviews = ReviewSerializer(many=True, read_only=True)
     sizes = serializers.SerializerMethodField()
     images = serializers.SerializerMethodField()
-    average_rating = serializers.FloatField(read_only=True)
-    review_count = serializers.IntegerField(read_only=True)
+    average_rating = serializers.SerializerMethodField()
+    review_count = serializers.SerializerMethodField()
     type_category = serializers.PrimaryKeyRelatedField(queryset=Type.objects.all())
     categories = serializers.PrimaryKeyRelatedField(many=True, queryset=Category.objects.all(), write_only=True)
 
@@ -83,6 +111,14 @@ class ProductSerializer(serializers.ModelSerializer):
     def get_images(self, obj):
         images = Image.objects.filter(product_image=obj)
         return ImageSerializer(images, many=True).data
+
+    def get_average_rating(self, obj):
+        reviews = Review.objects.filter(product=obj)
+        return reviews.aggregate(average_rating=Avg('rating'))['average_rating'] or 0
+
+    def get_review_count(self, obj):
+        reviews = Review.objects.filter(product=obj)
+        return reviews.aggregate(count=Count('id_review'))['count'] or 0
 
     def create(self, validated_data):
         categories = validated_data.pop('categories', [])
