@@ -98,8 +98,10 @@ DATABASES = {
         "NAME": "store",
         "USER": "postgres",
         "PASSWORD": "postgres",
-        "HOST": "database-eccomerce.clqw6a46o6yq.us-east-2.rds.amazonaws.com",
+        "HOST": "localhost",
         "PORT": "5432",
+
+        #If Deployed DB is up change HOST localhost with 'database-eccomerce.clqw6a46o6yq.us-east-2.rds.amazonaws.com'
     }
 }
 
