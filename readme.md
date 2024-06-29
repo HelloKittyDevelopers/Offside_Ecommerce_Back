@@ -4,4 +4,4 @@ Este es el repositorio del backend de la aplicación que tiene que ver con el ma
 
 Para correr el programa, se recomienda crear una carpeta con el front-end y el back-end y seguir la guía de configuración (Setup Guide) del backend para la creación del entorno virtual (Virtual Environment).
 
-Don't take into account tests, they were done really early in developement and all the changes basically made them inconsequential.
+No tomar en cuenta pruebas, ya que por cambios se volvieron obsoletas.
