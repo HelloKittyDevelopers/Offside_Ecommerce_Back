@@ -2,3 +2,8 @@ djangoenv
 .venv
 Encora_proj
 myenv
+*.pyc
+src/api/__pycache__/signals.cpython-312.pyc
+src/api/__pycache__/urls.cpython-312.pyc
+src/api/migrations/__pycache__/0001_initial.cpython-312.pyc
+src/api/migrations/0001_initial.py
