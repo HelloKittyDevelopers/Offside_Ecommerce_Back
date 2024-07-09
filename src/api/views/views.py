@@ -6,26 +6,50 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from rest_framework.response import Response
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework import generics
-from api.models import *
-from api.serializer import *
-from rest_framework.permissions import IsAuthenticated, AllowAny
-from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
-from rest_framework import viewsets
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from api.db_queries import *
 from django.shortcuts import get_object_or_404
-from rest_framework.response import Response
 from django.db.models import Avg, Count
-from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.shortcuts import render
-from rest_framework.views import APIView
 from django.contrib.auth.hashers import make_password
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework import status
+from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+from dj_rest_auth.registration.views import SocialLoginView  # Actualización
+from rest_framework.views import APIView
 
+
+class GoogleLogin(SocialLoginView):
+    adapter_class = GoogleOAuth2Adapter
+
+class GoogleLoginView(APIView):
+    permission_classes = [AllowAny]
+
+    def post(self, request):
+        token = request.data.get('access_token')
+        try:
+            adapter = GoogleOAuth2Adapter()
+            app = adapter.get_provider().get_app(request)
+            token = adapter.parse_token({'access_token': token})
+            token.app = app
+            login = adapter.complete_login(request, app, token, response=None)
+            login.token = token
+            login.state = SocialLoginView.State.SUCCEEDED
+            login.save(request, connect=True)
+            user = login.user
+            user.backend = 'django.contrib.auth.backends.ModelBackend'
+            # Aquí se genera el token de autenticación y se devuelve junto con los datos del usuario
+            from rest_framework.authtoken.models import Token
+            token, _ = Token.objects.get_or_create(user=user)
+            return Response({
+                'token': token.key,
+                'user': {
+                    'id': user.id,
+                    'username': user.username,
+                    'email': user.email,
+                }
+            }, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):

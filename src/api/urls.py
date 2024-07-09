@@ -1,8 +1,10 @@
+# api/urls.py
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views.views import *
 from rest_framework.documentation import include_docs_urls
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from django.urls import path, include
 
 router = DefaultRouter()
 router.register(r'categories', CategoryView, 'categories')
@@ -18,10 +20,13 @@ router.register(r'types', TypeView, 'types')
 router.register(r'orders', OrderUserView, 'orders')
 router.register(r'reviews', ReviewView, 'reviews')
 
-
 urlpatterns = [
     path("", include(router.urls)),
     path('docs/', include_docs_urls(title="Home API")),
     path('products/<int:pk>/', ProductDetailView.as_view(), name='product-detail'),
     path('type/<str:type>/', ProductListingView.as_view(), name='product-listing'),
+    path('auth/google/', GoogleLoginView.as_view(), name='google_login'),  # Nueva ruta para la autenticación con Google
+    path('auth/', include('dj_rest_auth.urls')),
+    path('auth/registration/', include('dj_rest_auth.registration.urls')),
+    path('auth/social/', include('allauth.socialaccount.urls')),
 ]
